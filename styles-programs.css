@@ -1,0 +1,182 @@
+/* Стили для страницы образовательных программ */
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.program-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.program-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.program-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    z-index: 1;
+}
+
+.program-badge.educational {
+    background-color: #2196F3;
+}
+
+.program-badge.module {
+    background-color: #4CAF50;
+}
+
+.program-badge.course {
+    background-color: #9C27B0;
+}
+
+.program-image {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.program-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.program-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--black);
+    font-weight: 600;
+}
+
+.program-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--medium-gray);
+    margin-bottom: 12px;
+}
+
+.program-desc {
+    font-size: 14px;
+    color: var(--dark-gray);
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.program-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.program-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.program-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.program-actions .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--cream);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--medium-gray);
+    position: relative;
+}
+
+.program-actions .btn-icon:hover {
+    background-color: var(--primary-green);
+    color: white;
+    transform: translateY(0px);
+    box-shadow: 0 4px 8px rgba(46, 125, 50, 0.2);
+}
+
+.program-actions .btn-icon svg {
+    width: 18px;
+    height: 18px;
+    transition: all 0.3s ease;
+}
+
+.program-actions .btn-icon:hover svg {
+    stroke: white;
+}
+
+/* Стили для кнопки "В избранное" */
+.bookmark-btn.bookmarked svg {
+    fill: #f44336;
+    stroke: #f44336;
+}
+
+.bookmark-btn:hover::after {
+    content: 'В избранное';
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--black);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0.9;
+}
+
+.bookmark-btn.bookmarked:hover::after {
+    content: 'Удалить из избранного';
+}
+
+/* Анимация для кнопки избранного */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.bookmark-btn.bookmarked .icon {
+    animation: pulse 0.5s;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .programs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filters-grid {
+        grid-template-columns: 1fr;
+    }
+}
