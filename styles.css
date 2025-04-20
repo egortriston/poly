@@ -147,18 +147,7 @@
   }
 
 
-  .login-btn {
-      background-color: var(--primary-green);
-      color: white;
-      border: none;
-      padding: 12px 30px; /* Увеличиваем */
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      margin-right: 0;
-      font-size: 16px; /* Чуть увеличиваем текст */
-  }
+
 
 
   /* Navigation */
@@ -184,6 +173,7 @@
   }
 
   .nav-menu a {
+    background-color: var(--nav);
       color: rgba(51, 51, 51);
       text-decoration: none;
       font-weight: 600;
@@ -720,6 +710,17 @@
 
     /* Адаптивность */
     @media (max-width: 768px) {
+
+
+      .logo {
+          height: 40px;
+          margin-left: 0;
+    }
+  
+    .logo-ipmt {
+      height: 23px;
+      margin-left: 0;
+    }
       .university-hero {
         height: 80vh;
         min-height: 500px;
@@ -1201,11 +1202,16 @@
 
     .search-container {
         width: 100%;
-        margin-bottom: 10px;
+        
     }
 
-    .search-input {
+    .search-input,
+    .login-btn {
         width: 100%;
+        font-size: 10px;
+    }
+    .search-input:focus {
+      width: 100%;
     }
 
     .nav-menu {
