@@ -142,10 +142,14 @@
                 <div class="content-suggestion">
                     <p>Вы можете предложить новость, материал или мероприятие для публикации на сайте</p>
                     <div class="suggestion-buttons">
-                        <button class="btn-primary">Предложить новость</button>
-                        <button class="btn-primary">Предложить материал</button>
-                        <button class="btn-primary">Предложить мероприятие</button>
-                        <button class="btn-primary">Предложить ОП</button>
+                        <button class="btn-primary" onclick="window.location.href='new-news.html'">Предложить
+                            новость</button>
+                        <button class="btn-primary" onclick="window.location.href='new-materials.html'">Предложить
+                            материал</button>
+                        <button class="btn-primary" onclick="window.location.href='new-events.html'">Предложить
+                            мероприятие</button>
+                        <button class="btn-primary" onclick="window.location.href='new-programs.html'">Предложить
+                            ОП</button>
                     </div>
                 </div>
             </section>
@@ -352,14 +356,7 @@
                 });
             }
 
-            // Обработка кнопок предложения контента
-            const suggestionBtns = document.querySelectorAll('.suggestion-buttons button');
-            suggestionBtns.forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const type = this.textContent.replace('Предложить ', '').toLowerCase();
-                    alert(`Форма для предложения ${type} будет открыта`);
-                });
-            });
+
         });
 
 
