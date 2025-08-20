@@ -241,6 +241,17 @@
 
 
     <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('isAuth')) {
+            window.location.href = 'login.html';
+        }
+
+        // Получаем пользователя из localStorage
+        function getUserFromStorage() {
+            const user = localStorage.getItem('user');
+            return user ? JSON.parse(user) : null;
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             // Инициализация Select2
             $('#categoryFilter, #facultyFilter').select2({
@@ -310,7 +321,7 @@
                 <p class="material-desc">${material.material_description}</p>
                 <div class="material-footer">
                                 <div class="material-actions">
-                                    <button class="btn-icon download-btn" title="Скачать" data-id="${material.id}">
+                                    <button class="btn-icon download-btn" title="Скачать" data-id="${material.id_material || material.id}">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path d="M12 15V3M12 15L8 11M12 15L16 11" stroke="currentColor"
@@ -319,7 +330,7 @@
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     </button>
-                                    <button class="btn-icon favorite-btn" title="В избранное" data-id="${material.id}">
+                                    <button class="btn-icon favorite-btn ${material.is_liked ? 'active' : ''}" title="${material.is_liked ? 'Убрать из избранного' : 'В избранное'}" data-id="${material.id_material || material.id}">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -327,6 +338,7 @@
                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
+                                        <span class="likes-count">${material.likes_count || 0}</span>
                                     </button>
                                 </div>
                 </div>
@@ -355,42 +367,73 @@
                             const url = window.URL.createObjectURL(blob);
                             const a = document.createElement('a');
                             a.href = url;
-                            a.download = `material_${materialId}`;
+
+                            // Получаем имя файла из заголовка Content-Disposition
+                            const contentDisposition = response.headers.get('Content-Disposition');
+                            let fileName = `material_${materialId}`;
+
+                            if (contentDisposition) {
+                                const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                                if (filenameMatch && filenameMatch[1]) {
+                                    fileName = filenameMatch[1].replace(/['"]/g, '');
+                                }
+                            }
+
+                            a.download = fileName;
                             document.body.appendChild(a);
                             a.click();
                             document.body.removeChild(a);
                             window.URL.revokeObjectURL(url);
                         } catch (error) {
                             console.error('Ошибка скачивания:', error);
-                            alert('Не удалось скачать материал');
+                            if (error.message.includes('404')) {
+                                alert('Файл не найден. Возможно, файл не был загружен при создании материала или материал не одобрен.');
+                            } else {
+                                alert('Не удалось скачать материал. Попробуйте позже.');
+                            }
                         }
                     });
                 });
 
-                // Обработчики для кнопок избранного
+                // Обработчики для кнопок избранного (лайков)
                 document.querySelectorAll('.favorite-btn').forEach(btn => {
                     btn.addEventListener('click', async function () {
                         const materialId = this.getAttribute('data-id');
+                        const currentUserId = getCurrentUserId();
+
+                        if (!currentUserId) {
+                            alert('Необходимо войти в систему для добавления в избранное');
+                            return;
+                        }
+
                         try {
-                            const response = await fetch(`/api/materials/${materialId}/favorite`, {
+                            const response = await fetch(`/api/likes/materials/${materialId}`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify({ action: 'toggle' })
+                                body: JSON.stringify({ userId: currentUserId })
                             });
 
                             if (!response.ok) {
-                                throw new Error(`Ошибка избранного: ${response.status}`);
+                                throw new Error(`Ошибка лайка: ${response.status}`);
                             }
 
                             const result = await response.json();
-                            if (result.isFavorite) {
-                                this.classList.add('active');
-                                this.setAttribute('title', 'Удалить из избранного');
-                            } else {
-                                this.classList.remove('active');
-                                this.setAttribute('title', 'В избранное');
+
+                            if (result.success) {
+                                const likesCountElement = this.querySelector('.likes-count');
+                                const currentCount = parseInt(likesCountElement.textContent);
+
+                                if (result.isLiked) {
+                                    this.classList.add('active');
+                                    this.setAttribute('title', 'Убрать из избранного');
+                                    likesCountElement.textContent = currentCount + 1;
+                                } else {
+                                    this.classList.remove('active');
+                                    this.setAttribute('title', 'В избранное');
+                                    likesCountElement.textContent = Math.max(0, currentCount - 1);
+                                }
                             }
                         } catch (error) {
                             console.error('Ошибка:', error);
@@ -398,6 +441,15 @@
                         }
                     });
                 });
+            }
+
+            // Функция для получения ID текущего пользователя
+            function getCurrentUserId() {
+                const user = getUserFromStorage();
+                if (user) {
+                    return user.id_user || user.id;
+                }
+                return null;
             }
 
             // Обработчик для кнопки фильтрации
@@ -448,6 +500,7 @@
                 materialsGrid.innerHTML = '<div class="loading-spinner">Загрузка материалов...</div>';
 
                 try {
+                    const currentUserId = getCurrentUserId();
                     const response = await fetch('/api/materials/filter', {
                         method: 'POST',
                         headers: {
@@ -456,7 +509,8 @@
                         },
                         body: JSON.stringify({
                             ...filters,
-                            sort: sortBy
+                            sort: sortBy,
+                            userId: currentUserId
                         })
                     });
 

@@ -51,8 +51,8 @@
             <ul class="nav-menu">
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="materials.html">Материалы</a></li>
-                <li><a href="events.html">Мероприятия</a></li>
-                <li><a href="news.html" class="active">Новости</a></li>
+                <li><a href="events.html" class="active">Мероприятия</a></li>
+                <li><a href="news.html">Новости</a></li>
                 <li><a href="programs.html">Образовательные программы</a></li>
             </ul>
         </div>
@@ -330,6 +330,17 @@
     <script src="chat.js"></script>
 
     <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('isAuth')) {
+            window.location.href = 'login.html';
+        }
+
+        // Получаем пользователя из localStorage
+        function getUserFromStorage() {
+            const user = localStorage.getItem('user');
+            return user ? JSON.parse(user) : null;
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             // Инициализация Select2 для всех множественных селектов
             $('#newsCategoryFilter').select2({
@@ -387,7 +398,6 @@
                     const endDate = event.end ? new Date(event.end).toLocaleDateString('ru-RU') : '';
                     const timeStart = event.time_start || '';
 
-
                     eventCard.innerHTML = `
                         <div class="news-image" style="background-image: url('/api/events/${event.id_event}/image'), url('image/003A0384.jpg')"></div>
                         <div class="news-content">
@@ -403,8 +413,7 @@
                             </div>
                             <p class="news-desc">${event.event_description || ''}</p>
                             <div class="news-footer">
-                                <!-- Кнопки для действий с мероприятием (например, в избранное) -->
-                                <button class="btn-icon bookmark-btn" title="В избранное" data-event-id="${event.id_event}">
+                                <button class="btn-icon favorite-btn ${event.is_liked ? 'active' : ''}" title="${event.is_liked ? 'Убрать из избранного' : 'В избранное'}" data-id="${event.id_event}">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -412,13 +421,66 @@
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round" />
                                     </svg>
+                                    <span class="likes-count">${event.likes_count || 0}</span>
                                 </button>
-                                <!-- Добавьте другие кнопки, если нужны -->
                             </div>
                         </div>
                     `;
 
                     eventsGrid.appendChild(eventCard);
+                });
+
+                // Добавляем обработчики событий после рендеринга
+                addEventEventListeners();
+            }
+
+            // Функция для добавления обработчиков событий
+            function addEventEventListeners() {
+                // Обработчики для кнопок избранного (лайков)
+                document.querySelectorAll('.favorite-btn').forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const eventId = this.getAttribute('data-id');
+                        const currentUserId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
+
+                        if (!currentUserId) {
+                            alert('Необходимо войти в систему для добавления в избранное');
+                            return;
+                        }
+
+                        try {
+                            const response = await fetch(`/api/likes/events/${eventId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ userId: currentUserId })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`Ошибка лайка: ${response.status}`);
+                            }
+
+                            const result = await response.json();
+
+                            if (result.success) {
+                                const likesCountElement = this.querySelector('.likes-count');
+                                const currentCount = parseInt(likesCountElement.textContent);
+
+                                if (result.isLiked) {
+                                    this.classList.add('active');
+                                    this.setAttribute('title', 'Убрать из избранного');
+                                    likesCountElement.textContent = currentCount + 1;
+                                } else {
+                                    this.classList.remove('active');
+                                    this.setAttribute('title', 'В избранное');
+                                    likesCountElement.textContent = Math.max(0, currentCount - 1);
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Ошибка:', error);
+                            alert('Не удалось выполнить действие с избранным');
+                        }
+                    });
                 });
             }
 
@@ -430,6 +492,7 @@
                 eventsGrid.innerHTML = '<div class="loading-spinner">Загрузка мероприятий...</div>';
 
                 try {
+                    const currentUserId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
                     const response = await fetch('/api/events/filter', {
                         method: 'POST',
                         headers: {
@@ -438,7 +501,8 @@
                         },
                         body: JSON.stringify({
                             ...filters,
-                            sort: sortBy
+                            sort: sortBy,
+                            userId: currentUserId
                         })
                     });
 

@@ -271,7 +271,18 @@
     <script src="chat.js"></script>
 
     <script>
-        $(document).ready(function () {
+        // Проверка авторизации
+        if (!localStorage.getItem('isAuth')) {
+            window.location.href = 'login.html';
+        }
+
+        // Получаем пользователя из localStorage
+        function getUserFromStorage() {
+            const user = localStorage.getItem('user');
+            return user ? JSON.parse(user) : null;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
             // Инициализация Select2 для всех множественных селектов
             $('#newsCategoryFilter').select2({
                 placeholder: 'Выберите категории',
@@ -288,6 +299,7 @@
                         input.value = '';
                     });
                     $('#newsCategoryFilter').val(null).trigger('change');
+                    loadNews(); // Загрузка всех новостей после сброса
                 });
             }
 
@@ -301,21 +313,79 @@
                 });
             }
 
-            // --- Динамическая загрузка новостей ---
-            fetch('/api/news')
-                .then(res => res.json())
-                .then(data => {
-                    const newsGrid = document.querySelector('.news-grid');
-                    newsGrid.innerHTML = '';
-                    // Фильтруем только одобренные
-                    const approvedNews = (data.success ? data.data : data).filter(item => item.news_status === 'Одобрено');
-                    if (!approvedNews.length) {
-                        newsGrid.innerHTML = '<div>Нет одобренных новостей</div>';
-                        return;
-                    }
-                    approvedNews.forEach(item => {
-                        newsGrid.innerHTML += `
-                        <div class="news-card">
+            // Функция для получения ID текущего пользователя
+            function getCurrentUserId() {
+                const user = getUserFromStorage();
+                return user ? user.id_user || user.id : null;
+            }
+
+            // Функция для добавления обработчиков событий
+            function addNewsEventListeners() {
+                // Обработчики для кнопок избранного (лайков)
+                document.querySelectorAll('.favorite-btn').forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const newsId = this.getAttribute('data-id');
+                        const currentUserId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
+
+                        if (!currentUserId) {
+                            alert('Необходимо войти в систему для добавления в избранное');
+                            return;
+                        }
+
+                        try {
+                            const response = await fetch(`/api/likes/news/${newsId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ userId: currentUserId })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`Ошибка лайка: ${response.status}`);
+                            }
+
+                            const result = await response.json();
+
+                            if (result.success) {
+                                const likesCountElement = this.querySelector('.likes-count');
+                                const currentCount = parseInt(likesCountElement.textContent);
+
+                                if (result.isLiked) {
+                                    this.classList.add('active');
+                                    this.setAttribute('title', 'Убрать из избранного');
+                                    likesCountElement.textContent = currentCount + 1;
+                                } else {
+                                    this.classList.remove('active');
+                                    this.setAttribute('title', 'В избранное');
+                                    likesCountElement.textContent = Math.max(0, currentCount - 1);
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Ошибка:', error);
+                            alert('Не удалось выполнить действие с избранным');
+                        }
+                    });
+                });
+            }
+
+            // Функция для отображения новостей
+            function renderNews(news) {
+                const newsGrid = document.querySelector('.news-grid');
+                if (!newsGrid) return;
+
+                newsGrid.innerHTML = '';
+
+                if (!news || news.length === 0) {
+                    newsGrid.innerHTML = '<div class="no-news">Новости не найдены</div>';
+                    return;
+                }
+
+                news.forEach(item => {
+                    const newsCard = document.createElement('div');
+                    newsCard.className = 'news-card';
+
+                    newsCard.innerHTML = `
                             <div class="news-image" style="background-image: url('/api/news/${item.id_news}/image'), url('image/pi_novosti_sentyabr_1.jpg')"></div>
                             <div class="news-content">
                                 <h3 class="news-title">${item.name_news || 'Без названия'}</h3>
@@ -325,7 +395,7 @@
                                 </div>
                                 <p class="news-desc">${item.news_text || ''}</p>
                                 <div class="news-footer">
-                                    <button class="btn-icon bookmark-btn" title="В избранное" data-news-id="${item.id_news}">
+                                <button class="btn-icon favorite-btn ${item.is_liked ? 'active' : ''}" title="${item.is_liked ? 'Убрать из избранного' : 'В избранное'}" data-id="${item.id_news}">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -333,15 +403,55 @@
                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
+                                    <span class="likes-count">${item.likes_count || 0}</span>
                                     </button>
                                 </div>
                             </div>
-                        </div>`;
-                    });
-                })
-                .catch(() => {
-                    document.querySelector('.news-grid').innerHTML = '<div>Ошибка загрузки новостей</div>';
+                    `;
+
+                    newsGrid.appendChild(newsCard);
                 });
+
+                // Добавляем обработчики событий после рендеринга
+                addNewsEventListeners();
+            }
+
+            // Функция для загрузки новостей
+            async function loadNews() {
+                const newsGrid = document.querySelector('.news-grid');
+                if (!newsGrid) return;
+
+                newsGrid.innerHTML = '<div class="loading-spinner">Загрузка новостей...</div>';
+
+                try {
+                    const currentUserId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
+                    const response = await fetch(`/api/news?userId=${currentUserId || ''}`);
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || data.message || `Ошибка ${response.status}`);
+                    }
+
+                    if (!data.success) {
+                        throw new Error(data.message || 'Ошибка при загрузке новостей');
+                    }
+
+                    renderNews(data.data);
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    newsGrid.innerHTML = `
+                        <div class="error-message">
+                            Ошибка загрузки: ${error.message}
+                            <button class="retry-btn">Попробовать снова</button>
+                        </div>
+                    `;
+
+                    document.querySelector('.retry-btn')?.addEventListener('click', () => loadNews());
+                }
+            }
+
+            // Загрузка новостей при загрузке страницы
+            loadNews();
         });
     </script>
 </body>

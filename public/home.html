@@ -158,27 +158,10 @@
             <section class="section">
                 <div class="section-header">
                     <h2 class="section-title">Избранное</h2>
-                    <a href="#" class="see-all">Все избранное→</a>
+                    <a href="favorites.html" class="see-all">Все избранное→</a>
                 </div>
                 <div class="items-grid">
-                    <div class="item-card">
-                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
-                        <div class="item-content">
-                            <h3 class="item-title">Избранное 1</h3>
-                            <div class="item-date">Добавлено: 15 мая 2023</div>
-                            <p class="item-desc">Сравнительный анализ алгоритмов машинного обучения для задач
-                                классификации</p>
-                        </div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
-                        <div class="item-content">
-                            <h3 class="item-title">Избранное 2</h3>
-                            <div class="item-date">Добавлено: 10 мая 2023</div>
-                            <p class="item-desc">Практическое руководство по работе с нейронными сетями</p>
-
-                        </div>
-                    </div>
+                    <!-- Здесь будут загружаться избранные элементы -->
                 </div>
             </section>
 
@@ -198,16 +181,7 @@
                     <a href="#" class="see-all">Все новости →</a>
                 </div>
                 <div class="items-grid">
-                    <div class="item-card">
-                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
-                        <div class="item-content">
-                            <h3 class="item-title">Конференция по ИИ</h3>
-                            <div class="item-date">20 июня 2023</div>
-                            <p class="item-desc">Отчет о участии в международной конференции по искусственному
-                                интеллекту</p>
-                            <div class="item-status published">Опубликовано</div>
-                        </div>
-                    </div>
+                    <!-- Здесь будут загружаться новости пользователя -->
                 </div>
             </section>
 
@@ -218,16 +192,7 @@
                     <a href="#" class="see-all">Все мероприятия →</a>
                 </div>
                 <div class="items-grid">
-                    <div class="item-card">
-                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
-                        <div class="item-content">
-                            <h3 class="item-title">Семинар по Data Science</h3>
-                            <div class="item-date">25 июня 2023 | 14:00</div>
-                            <p class="item-desc">Практическое применение методов анализа данных в научных исследованиях
-                            </p>
-                            <div class="item-status approved">Утверждено</div>
-                        </div>
-                    </div>
+                    <!-- Здесь будут загружаться мероприятия пользователя -->
                 </div>
             </section>
 
@@ -238,15 +203,7 @@
                     <a href="#" class="see-all">Все программы →</a>
                 </div>
                 <div class="items-grid">
-                    <div class="item-card">
-                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
-                        <div class="item-content">
-                            <h3 class="item-title">Курс по машинному обучению</h3>
-                            <div class="item-date">Набор до 30 июня</div>
-                            <p class="item-desc">Практический курс по основам машинного обучения для начинающих</p>
-                            <div class="item-status draft">Черновик</div>
-                        </div>
-                    </div>
+                    <!-- Здесь будут загружаться программы пользователя -->
                 </div>
             </section>
 
@@ -540,6 +497,123 @@
             }
         }
 
+        // Функция для загрузки избранных элементов
+        async function loadUserFavorites() {
+            const user = getUserFromStorage();
+            if (!user) return;
+            const userId = user.id_user || user.id;
+
+            // Находим контейнер для избранного
+            const sections = document.querySelectorAll('.section');
+            let container = null;
+            sections.forEach(section => {
+                const title = section.querySelector('.section-title');
+                if (title && title.textContent.trim() === 'Избранное') {
+                    container = section.querySelector('.items-grid');
+                }
+            });
+            if (!container) return;
+
+            container.innerHTML = '<div>Загрузка избранного...</div>';
+
+            try {
+                // Получаем все лайки пользователя
+                const response = await fetch(`/api/likes/user/${userId}`);
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    container.innerHTML = '<div>Ошибка загрузки избранного</div>';
+                    return;
+                }
+
+                if (!data.data.length) {
+                    container.innerHTML = '<div>У вас пока нет избранных элементов</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+
+                // Сортируем лайки по ID (наибольшие первыми) и берем только первые 3
+                const sortedLikes = data.data.sort((a, b) => b.id_like - a.id_like).slice(0, 3);
+
+                // Обрабатываем каждый лайк
+                for (const like of sortedLikes) {
+                    let itemData = null;
+                    let itemType = '';
+                    let imageUrl = '';
+                    let title = '';
+                    let date = '';
+                    let description = '';
+
+                    // Получаем данные в зависимости от типа лайка
+                    if (like.id_material) {
+                        const materialResponse = await fetch(`/api/materials/${like.id_material}`);
+                        if (materialResponse.ok) {
+                            itemData = await materialResponse.json();
+                            itemType = 'material';
+                            imageUrl = `/api/materials/${like.id_material}/image`;
+                            title = itemData.material_name;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.material_description;
+                        }
+                    } else if (like.id_program) {
+                        const programResponse = await fetch(`/api/programs/${like.id_program}`);
+                        if (programResponse.ok) {
+                            itemData = await programResponse.json();
+                            itemType = 'program';
+                            imageUrl = `/api/programs/${like.id_program}/image`;
+                            title = itemData.program_name;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.program_description;
+                        }
+                    } else if (like.id_event) {
+                        const eventResponse = await fetch(`/api/events/${like.id_event}`);
+                        if (eventResponse.ok) {
+                            itemData = await eventResponse.json();
+                            itemType = 'event';
+                            imageUrl = `/api/events/${like.id_event}/image`;
+                            title = itemData.event_name;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.event_description;
+                        }
+                    } else if (like.id_news) {
+                        const newsResponse = await fetch(`/api/news/${like.id_news}`);
+                        if (newsResponse.ok) {
+                            itemData = await newsResponse.json();
+                            itemType = 'news';
+                            imageUrl = `/api/news/${like.id_news}/image`;
+                            title = itemData.name_news;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.news_text;
+                        }
+                    }
+
+                    if (itemData) {
+                        const card = document.createElement('div');
+                        card.className = 'item-card';
+                        card.innerHTML = `
+                            <div class="item-image" style="background-image: url('${imageUrl}'), url('image/5a32704a30a5a316941684.jpg')"></div>
+                            <div class="item-content">
+                                <h3 class="item-title">${title}</h3>
+                                <div class="item-date">Добавлено: ${date}</div>
+                                <p class="item-desc">${description || ''}</p>
+                                <div class="item-type">${itemType === 'material' ? 'Материал' : itemType === 'program' ? 'Программа' : itemType === 'event' ? 'Мероприятие' : itemType === 'news' ? 'Новость' : 'Элемент'}</div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }
+                }
+
+                if (container.children.length === 0) {
+                    container.innerHTML = '<div>У вас пока нет избранных элементов</div>';
+                }
+
+            } catch (err) {
+                console.error('Ошибка загрузки избранного:', err);
+                container.innerHTML = '<div>Ошибка сети</div>';
+            }
+        }
+
         // При загрузке страницы
         document.addEventListener('DOMContentLoaded', function () {
             // Подсветка активной кнопки личного кабинета
@@ -605,6 +679,7 @@
             loadUserEvents();
             loadUserNews();
             loadUserPrograms();
+            loadUserFavorites(); // Загружаем избранное при загрузке страницы
         });
 
 

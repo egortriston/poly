@@ -30,64 +30,69 @@ exports.getEventById = async (req, res) => {
 
 exports.filterEvents = async (req, res) => {
   try {
-    const { search, categories, location, startDate, endDate, sort } = req.body;
+    const { search, categories, location, startDate, endDate, sort, userId } = req.body;
 
     let query = `
-      SELECT * FROM events_table 
-      WHERE event_status = 'Одобрено'
+      SELECT e.*,
+             COALESCE(l.likes_count, 0) as likes_count,
+             CASE WHEN ul.id_like IS NOT NULL THEN true ELSE false END as is_liked
+      FROM events_table e
+      LEFT JOIN (
+        SELECT id_event, COUNT(*) as likes_count
+        FROM user_likes
+        GROUP BY id_event
+      ) l ON e.id_event = l.id_event
+      LEFT JOIN user_likes ul ON e.id_event = ul.id_event AND ul.id_user = $1
+      WHERE e.event_status = 'Одобрено'
     `;
-    const params = [];
-    let paramCount = 1;
+    const params = [userId || null];
+    let paramCount = 2;
 
     if (search) {
       // Поиск по названию мероприятия
-      query += ` AND event_name ILIKE $${paramCount++}`;
+      query += ` AND e.event_name ILIKE $${paramCount++}`;
       params.push(`%${search}%`);
     }
 
     if (categories && categories.length > 0) {
       // Фильтрация по типу или категории (у вас есть event_type и event_category)
-      // Давайте пока фильтровать по event_type, можно будет доработать при необходимости
-      query += ` AND event_category = ANY($${paramCount++})`;
+      // Давайте пока фильтровать по event_category, можно будет доработать при необходимости
+      query += ` AND e.event_category = ANY($${paramCount++})`;
       params.push(categories);
     }
 
     if (location) {
       // Фильтрация по месту проведения
-      query += ` AND event_place ILIKE $${paramCount++}`;
+      query += ` AND e.event_place ILIKE $${paramCount++}`;
       params.push(`%${location}%`);
     }
 
-
     if (startDate) {
       // Фильтрация по дате начала (start)
-      query += ` AND start >= $${paramCount++}`;
+      query += ` AND e.start >= $${paramCount++}`;
       params.push(startDate);
     }
 
     if (endDate) {
       // Фильтрация по дате окончания (end)
-      query += ` AND end <= $${paramCount++}`;
+      query += ` AND e.end <= $${paramCount++}`;
       params.push(endDate);
     }
 
-
     // Добавляем сортировку
-    // Используем event_status и date_create для сортировки, как у материалов
     const sortBy = sort || 'newest';
     switch (sortBy) {
       case 'newest':
-        query += ' ORDER BY id_event DESC, date_create DESC';
+        query += ' ORDER BY e.id_event DESC, e.date_create DESC';
         break;
       case 'oldest':
-        query += ' ORDER BY id_event ASC, date_create ASC';
+        query += ' ORDER BY e.id_event ASC, e.date_create ASC';
         break;
-      // Добавьте другие варианты сортировки, если они нужны для мероприятий
-      // case 'popular':
-      //   query += ' ORDER BY download_count DESC'; // Пример, если есть поле популярности
-      //   break;
+      case 'popular':
+        query += ' ORDER BY l.likes_count DESC NULLS LAST, e.id_event DESC';
+        break;
       default:
-        query += ' ORDER BY id_event DESC, date_create DESC';
+        query += ' ORDER BY e.id_event DESC, e.date_create DESC';
     }
 
     const result = await pool.query(query, params);
