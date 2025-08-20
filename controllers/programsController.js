@@ -30,24 +30,33 @@ exports.getProgramById = async (req, res) => {
 
 exports.filterPrograms = async (req, res) => {
   try {
-    const { search, type, faculty, duration, level, sort } = req.body;
+    const { search, type, faculty, duration, level, sort, userId } = req.body;
 
     let query = `
-      SELECT * FROM programs_table 
-      WHERE program_status = 'Одобрено'
+      SELECT p.*,
+             COALESCE(l.likes_count, 0) as likes_count,
+             CASE WHEN ul.id_like IS NOT NULL THEN true ELSE false END as is_liked
+      FROM programs_table p
+      LEFT JOIN (
+        SELECT id_program, COUNT(*) as likes_count
+        FROM user_likes
+        GROUP BY id_program
+      ) l ON p.id_program = l.id_program
+      LEFT JOIN user_likes ul ON p.id_program = ul.id_program AND ul.id_user = $1
+      WHERE p.program_status = 'Одобрено'
     `;
-    const params = [];
-    let paramCount = 1;
+    const params = [userId || null];
+    let paramCount = 2;
 
     if (search) {
       // Поиск по названию программы
-      query += ` AND program_name ILIKE $${paramCount++}`;
+      query += ` AND p.program_name ILIKE $${paramCount++}`;
       params.push(`%${search}%`);
     }
 
     if (type && type.length > 0) {
       // Фильтрация по типу программы
-      query += ` AND program_type = ANY($${paramCount++})`;
+      query += ` AND p.program_type = ANY($${paramCount++})`;
       params.push(type);
     }
 
@@ -74,24 +83,23 @@ exports.filterPrograms = async (req, res) => {
     //   params.push(level);
     // }
 
-
     // Добавляем сортировку
     const sortBy = sort || 'newest';
     switch (sortBy) {
       case 'newest':
-        query += ' ORDER BY id_program DESC, date_create DESC';
+        query += ' ORDER BY p.id_program DESC, p.date_create DESC';
         break;
-      // В вашей таблице нет явного поля популярности или длительности для сортировки.
-      // Если нужна сортировка по этим параметрам, потребуется либо добавить поля,
-      // либо реализовать другую логику (например, подсчет просмотров или скачиваний для популярности).
-      // case 'popular':
-      //   query += ' ORDER BY some_popularity_field DESC';
-      //   break;
+      case 'popular':
+        query += ' ORDER BY l.likes_count DESC NULLS LAST, p.id_program DESC';
+        break;
+      // В вашей таблице нет явного поля длительности для сортировки.
+      // Если нужна сортировка по этому параметру, потребуется либо добавить поля,
+      // либо реализовать другую логику.
       // case 'duration':
       //   query += ' ORDER BY some_duration_field ASC';
       //   break;
       default:
-        query += ' ORDER BY id_program DESC, date_create DESC';
+        query += ' ORDER BY p.id_program DESC, p.date_create DESC';
     }
 
     const result = await pool.query(query, params);

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все избранное | СПбПУ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-favorites.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="image/logo01.svg" alt="Логотип СПбПУ" class="logo">
+
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" placeholder="Поиск..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button class="message-btn" id="chatBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                    <button class="login-btn" onclick="window.location.href='home.html'">Личный кабинет</button>
+                </div>
+                <img src="image/logo.svg" alt="Логотип СПбПУ" class="logo-ipmt">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="materials.html">Материалы</a></li>
+                <li><a href="events.html">Мероприятия</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="programs.html">Образовательные программы</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Заголовок страницы -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Все избранное</h2>
+                    <div class="favorites-stats">
+                        <span id="favoritesCount">0 элементов</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Фильтры -->
+            <section class="section">
+                <div class="filters-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Фильтры</h3>
+                        <button class="btn-reset" id="resetFilters">Сбросить фильтры</button>
+                    </div>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="typeFilter">Тип контента</label>
+                            <select id="typeFilter" class="filter-select">
+                                <option value="">Все типы</option>
+                                <option value="material">Материалы</option>
+                                <option value="program">Программы</option>
+                                <option value="event">Мероприятия</option>
+                                <option value="news">Новости</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="searchFilter">Поиск по названию</label>
+                            <input type="text" id="searchFilter" placeholder="Введите название...">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Список избранного -->
+            <section class="section">
+                <div class="items-grid" id="favoritesGrid">
+                    <!-- Здесь будут отображаться избранные элементы -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Санкт-Петербург, Политехническая ул., 29</p>
+                    <p>+7 (812) 123-45-67</p>
+                    <p>info@spbstu.ru</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <a href="#">Расписание</a>
+                    <a href="#">Преподаватели</a>
+                    <a href="#">Библиотека</a>
+                    <a href="#">Техподдержка</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <a href="#">ВКонтакте</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>© 2023 Санкт-Петербургский политехнический университет Петра Великого. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Чат поддержки</h3>
+            <button class="close-chat" id="closeChat">✖</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message other">
+                Добрый день! Чем могу помочь?
+                <span class="message-time">10:42</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Введите сообщение...">
+            <button id="sendMessage">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('isAuth')) {
+            window.location.href = 'login.html';
+        }
+
+        // Получаем пользователя из localStorage
+        function getUserFromStorage() {
+            const user = localStorage.getItem('user');
+            return user ? JSON.parse(user) : null;
+        }
+
+        // Функция для получения ID текущего пользователя
+        function getCurrentUserId() {
+            const user = getUserFromStorage();
+            if (user) {
+                return user.id_user || user.id;
+            }
+            return null;
+        }
+
+        // Функция для загрузки всех избранных элементов
+        async function loadAllFavorites() {
+            const user = getUserFromStorage();
+            if (!user) {
+                console.error('Пользователь не найден в localStorage');
+                return;
+            }
+            const userId = user.id_user || user.id;
+            console.log('Загружаем избранное для пользователя ID:', userId);
+
+            const container = document.getElementById('favoritesGrid');
+            const countElement = document.getElementById('favoritesCount');
+
+            if (!container) {
+                console.error('Контейнер favoritesGrid не найден');
+                return;
+            }
+
+            container.innerHTML = '<div class="loading-spinner">Загрузка избранного...</div>';
+
+            try {
+                console.log('Отправляем запрос к /api/likes/user/' + userId);
+                // Получаем все лайки пользователя
+                const response = await fetch(`/api/likes/user/${userId}`);
+                console.log('Получен ответ:', response.status, response.statusText);
+
+                const data = await response.json();
+                console.log('Данные ответа:', data);
+
+                if (!response.ok || !data.success) {
+                    console.error('Ошибка в ответе:', data);
+                    container.innerHTML = '<div class="error-message">Ошибка загрузки избранного</div>';
+                    return;
+                }
+
+                if (!data.data.length) {
+                    container.innerHTML = '<div class="no-favorites">У вас пока нет избранных элементов</div>';
+                    countElement.textContent = '0 элементов';
+                    return;
+                }
+
+                container.innerHTML = '';
+                let loadedItems = 0;
+
+                // Обрабатываем каждый лайк
+                for (const like of data.data) {
+                    console.log('Обрабатываем лайк:', like);
+                    let itemData = null;
+                    let itemType = '';
+                    let imageUrl = '';
+                    let title = '';
+                    let date = '';
+                    let description = '';
+
+                    // Получаем данные в зависимости от типа лайка
+                    if (like.id_material) {
+                        console.log('Загружаем данные материала ID:', like.id_material);
+                        const materialResponse = await fetch(`/api/materials/${like.id_material}`);
+                        if (materialResponse.ok) {
+                            itemData = await materialResponse.json();
+                            itemType = 'material';
+                            imageUrl = `/api/materials/${like.id_material}/image`;
+                            title = itemData.material_name;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.material_description;
+                        }
+                    } else if (like.id_program) {
+                        console.log('Загружаем данные программы ID:', like.id_program);
+                        const programResponse = await fetch(`/api/programs/${like.id_program}`);
+                        if (programResponse.ok) {
+                            itemData = await programResponse.json();
+                            itemType = 'program';
+                            imageUrl = `/api/programs/${like.id_program}/image`;
+                            title = itemData.program_name;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.program_description;
+                        }
+                    } else if (like.id_event) {
+                        console.log('Загружаем данные мероприятия ID:', like.id_event);
+                        const eventResponse = await fetch(`/api/events/${like.id_event}`);
+                        if (eventResponse.ok) {
+                            itemData = await eventResponse.json();
+                            itemType = 'event';
+                            imageUrl = `/api/events/${like.id_event}/image`;
+                            title = itemData.event_name;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.event_description;
+                        }
+                    } else if (like.id_news) {
+                        console.log('Загружаем данные новости ID:', like.id_news);
+                        const newsResponse = await fetch(`/api/news/${like.id_news}`);
+                        if (newsResponse.ok) {
+                            itemData = await newsResponse.json();
+                            itemType = 'news';
+                            imageUrl = `/api/news/${like.id_news}/image`;
+                            title = itemData.name_news;
+                            date = new Date(itemData.date_create).toLocaleDateString('ru-RU');
+                            description = itemData.news_text;
+                        }
+                    }
+
+                    if (itemData) {
+                        const card = document.createElement('div');
+                        card.className = 'item-card';
+                        card.setAttribute('data-type', itemType);
+                        // Безопасно устанавливаем data-title
+                        const safeTitle = title || 'Без названия';
+                        card.setAttribute('data-title', safeTitle.toLowerCase());
+                        card.setAttribute('data-item-id', like.id_material || like.id_program || like.id_event || like.id_news);
+                        card.innerHTML = `
+                            <div class="item-image" style="background-image: url('${imageUrl}'), url('image/5a32704a30a5a316941684.jpg')"></div>
+                            <div class="item-content">
+                                <h3 class="item-title">${safeTitle}</h3>
+                                <div class="item-date">Добавлено: ${date}</div>
+                                <p class="item-desc">${description || ''}</p>
+                                <div class="item-type">${itemType === 'material' ? 'Материал' : itemType === 'program' ? 'Программа' : itemType === 'event' ? 'Мероприятие' : itemType === 'news' ? 'Новость' : 'Элемент'}</div>
+                                <button class="btn-remove-favorite" data-type="${itemType}">
+                                    Удалить из избранного
+                                </button>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                        loadedItems++;
+                    }
+                }
+
+                countElement.textContent = `${loadedItems} элементов`;
+
+                if (loadedItems === 0) {
+                    container.innerHTML = '<div class="no-favorites">У вас пока нет избранных элементов</div>';
+                }
+
+                // Добавляем обработчики для кнопок удаления
+                addRemoveEventListeners();
+
+                // Добавляем обработчики фильтров только после загрузки данных
+                document.getElementById('typeFilter')?.addEventListener('change', filterFavorites);
+                document.getElementById('searchFilter')?.addEventListener('input', filterFavorites);
+
+                // Обработчик сброса фильтров
+                document.getElementById('resetFilters')?.addEventListener('click', function () {
+                    document.getElementById('typeFilter').value = '';
+                    document.getElementById('searchFilter').value = '';
+                    filterFavorites();
+                });
+
+            } catch (err) {
+                console.error('Ошибка загрузки избранного:', err);
+                container.innerHTML = '<div class="error-message">Ошибка сети: ' + err.message + '</div>';
+            }
+        }
+
+        // Функция для добавления обработчиков удаления из избранного
+        function addRemoveEventListeners() {
+            document.querySelectorAll('.btn-remove-favorite').forEach(btn => {
+                btn.addEventListener('click', async function () {
+                    const itemType = this.getAttribute('data-type');
+                    const card = this.closest('.item-card');
+                    const itemIdAttr = card.getAttribute('data-item-id');
+                    const currentUserId = getCurrentUserId();
+
+                    console.log('Удаление из избранного:', {
+                        itemType: itemType,
+                        itemId: itemIdAttr,
+                        userId: currentUserId
+                    });
+
+                    if (!currentUserId) {
+                        alert('Ошибка авторизации');
+                        return;
+                    }
+
+                    if (confirm('Вы уверены, что хотите удалить этот элемент из избранного?')) {
+                        try {
+                            let endpoint = '';
+                            switch (itemType) {
+                                case 'material': endpoint = `/api/likes/materials/${itemIdAttr}`; break;
+                                case 'program': endpoint = `/api/likes/programs/${itemIdAttr}`; break;
+                                case 'event': endpoint = `/api/likes/events/${itemIdAttr}`; break;
+                                case 'news': endpoint = `/api/likes/news/${itemIdAttr}`; break;
+                                default: throw new Error('Неизвестный тип элемента');
+                            }
+
+                            console.log('Отправляем запрос на удаление:', endpoint);
+
+                            const response = await fetch(endpoint, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ userId: currentUserId })
+                            });
+
+                            console.log('Ответ на удаление:', response.status, response.statusText);
+
+                            if (!response.ok) {
+                                const errorData = await response.json().catch(() => ({}));
+                                console.error('Ошибка удаления:', errorData);
+                                throw new Error(`Ошибка удаления: ${response.status} - ${errorData.message || response.statusText}`);
+                            }
+
+                            const result = await response.json();
+                            console.log('Результат удаления:', result);
+
+                            // Удаляем карточку из DOM
+                            this.closest('.item-card').remove();
+
+                            // Обновляем счетчик
+                            const countElement = document.getElementById('favoritesCount');
+                            const currentCount = parseInt(countElement.textContent);
+                            countElement.textContent = `${currentCount - 1} элементов`;
+
+                            if (currentCount - 1 === 0) {
+                                document.getElementById('favoritesGrid').innerHTML = '<div class="no-favorites">У вас пока нет избранных элементов</div>';
+                            }
+
+                        } catch (error) {
+                            console.error('Ошибка при удалении из избранного:', error);
+                            alert('Не удалось удалить из избранного: ' + error.message);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Функция для фильтрации элементов
+        function filterFavorites() {
+            // Проверяем, что элементы загружены
+            const cards = document.querySelectorAll('.item-card');
+            if (cards.length === 0) {
+                console.log('Карточки еще не загружены, пропускаем фильтрацию');
+                return;
+            }
+
+            const typeFilter = document.getElementById('typeFilter')?.value || '';
+            const searchFilter = (document.getElementById('searchFilter')?.value || '').toLowerCase();
+
+            console.log('Фильтрация:', { typeFilter, searchFilter, cardsCount: cards.length });
+
+            cards.forEach(card => {
+                try {
+                    const cardType = card.getAttribute('data-type') || '';
+                    const cardTitle = card.getAttribute('data-title') || '';
+                    const cardTitleLower = cardTitle.toLowerCase();
+
+                    console.log('Карточка:', { cardType, cardTitle, cardTitleLower });
+
+                    const typeMatch = !typeFilter || cardType === typeFilter;
+                    const searchMatch = !searchFilter || cardTitleLower.includes(searchFilter);
+
+                    if (typeMatch && searchMatch) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error('Ошибка при фильтрации карточки:', error);
+                    card.style.display = 'block'; // Показываем карточку в случае ошибки
+                }
+            });
+
+            // Обновляем счетчик видимых элементов
+            const visibleCards = document.querySelectorAll('.item-card[style*="display: block"], .item-card:not([style*="display: none"])');
+            const countElement = document.getElementById('favoritesCount');
+            if (countElement) {
+                countElement.textContent = `${visibleCards.length} элементов`;
+            }
+        }
+
+        // При загрузке страницы
+        document.addEventListener('DOMContentLoaded', async function () {
+            // Проверяем доступность API
+            try {
+                console.log('Проверяем доступность API...');
+                const testResponse = await fetch('/api/likes');
+                console.log('API доступен, статус:', testResponse.status);
+            } catch (error) {
+                console.error('API недоступен:', error);
+                document.getElementById('favoritesGrid').innerHTML = '<div class="error-message">Сервер недоступен. Проверьте подключение к интернету.</div>';
+                return;
+            }
+
+            // Загружаем все избранные элементы
+            loadAllFavorites();
+        });
+    </script>
+    <script src="chat.js"></script>
+</body>
+
+</html>

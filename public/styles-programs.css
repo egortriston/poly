@@ -180,3 +180,42 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Стили для кнопок лайков программ */
+.btn-icon.favorite-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-icon.favorite-btn .likes-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--medium-gray);
+    transition: color 0.3s ease;
+}
+
+.btn-icon.favorite-btn:hover .likes-count {
+    color: white;
+}
+
+.btn-icon.favorite-btn.active {
+    background-color: #ff4757;
+    color: white;
+}
+
+.btn-icon.favorite-btn.active svg path {
+    fill: white;
+    stroke: white;
+}
+
+.btn-icon.favorite-btn.active .likes-count {
+    color: white;
+}
+
+/* Активное состояние кнопки избранного */
+.favorite-btn.active svg path {
+    fill: #e74c3c;
+    stroke: #e74c3c;
+}

@@ -3,12 +3,39 @@ const multer = require('multer');
 const upload = multer();
 const LargeObjectManager = require('pg-large-object').LargeObjectManager;
 
+// Универсальная функция для отправки ответов
+const sendResponse = (res, status, data) => {
+  res.status(status).json(data);
+};
+
 exports.getAllNews = async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM news_table');
-    res.json(result.rows);
+    const { userId } = req.query;
+    
+    let query = `
+      SELECT n.*,
+             COALESCE(l.likes_count, 0) as likes_count,
+             CASE WHEN ul.id_like IS NOT NULL THEN true ELSE false END as is_liked
+      FROM news_table n
+      LEFT JOIN (
+        SELECT id_news, COUNT(*) as likes_count
+        FROM user_likes
+        GROUP BY id_news
+      ) l ON n.id_news = l.id_news
+      LEFT JOIN user_likes ul ON n.id_news = ul.id_news AND ul.id_user = $1
+      WHERE n.news_status = 'Одобрено'
+      ORDER BY n.id_news DESC, n.date_create DESC
+    `;
+    
+    const result = await pool.query(query, [userId || null]);
+    sendResponse(res, 200, { success: true, data: result.rows });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error in getAllNews:', err);
+    sendResponse(res, 500, {
+      success: false,
+      error: 'Internal server error',
+      message: err.message
+    });
   }
 };
 

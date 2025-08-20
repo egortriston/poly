@@ -351,6 +351,17 @@
     <script src="rating.js"></script>
 
     <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('isAuth')) {
+            window.location.href = 'login.html';
+        }
+
+        // Получаем пользователя из localStorage
+        function getUserFromStorage() {
+            const user = localStorage.getItem('user');
+            return user ? JSON.parse(user) : null;
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             // Инициализация Select2
             $('#programTypeFilter, #programFacultyFilter, #programDuration, #programLevel').select2({
@@ -408,7 +419,6 @@
                     };
                     badgeClass = typeClasses[program.program_type] || 'other';
 
-
                     programCard.innerHTML = `
                         <div class="program-badge ${badgeClass}">${badgeText}</div>
                         <div class="program-image" style="background-image: url('/api/programs/${program.id_program}/image'), url('image/student.jpg')"></div>
@@ -442,13 +452,14 @@
                                         </svg>
                                     </a>` : ''}
 
-                                    <button class="btn-icon bookmark-btn" title="В избранное" data-program-id="${program.id_program}">
+                                    <button class="btn-icon favorite-btn ${program.is_liked ? 'active' : ''}" title="${program.is_liked ? 'Убрать из избранного' : 'В избранное'}" data-id="${program.id_program}">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
+                                        <span class="likes-count">${program.likes_count || 0}</span>
                                     </button>
                                 </div>
                             </div>
@@ -457,8 +468,59 @@
 
                     programsGrid.appendChild(programCard);
                 });
-                // // Инициализация обработчиков рейтинга после рендеринга
-                // initRating();
+
+                // Добавляем обработчики событий после рендеринга
+                addProgramEventListeners();
+            }
+
+            // Функция для добавления обработчиков событий
+            function addProgramEventListeners() {
+                // Обработчики для кнопок избранного (лайков)
+                document.querySelectorAll('.favorite-btn').forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const programId = this.getAttribute('data-id');
+                        const currentUserId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
+
+                        if (!currentUserId) {
+                            alert('Необходимо войти в систему для добавления в избранное');
+                            return;
+                        }
+
+                        try {
+                            const response = await fetch(`/api/likes/programs/${programId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ userId: currentUserId })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`Ошибка лайка: ${response.status}`);
+                            }
+
+                            const result = await response.json();
+
+                            if (result.success) {
+                                const likesCountElement = this.querySelector('.likes-count');
+                                const currentCount = parseInt(likesCountElement.textContent);
+
+                                if (result.isLiked) {
+                                    this.classList.add('active');
+                                    this.setAttribute('title', 'Убрать из избранного');
+                                    likesCountElement.textContent = currentCount + 1;
+                                } else {
+                                    this.classList.remove('active');
+                                    this.setAttribute('title', 'В избранное');
+                                    likesCountElement.textContent = Math.max(0, currentCount - 1);
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Ошибка:', error);
+                            alert('Не удалось выполнить действие с избранным');
+                        }
+                    });
+                });
             }
 
             // Функция для загрузки программ
@@ -469,6 +531,7 @@
                 programsGrid.innerHTML = '<div class="loading-spinner">Загрузка программ...</div>';
 
                 try {
+                    const currentUserId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
                     const response = await fetch('/api/programs/filter', {
                         method: 'POST',
                         headers: {
@@ -477,7 +540,8 @@
                         },
                         body: JSON.stringify({
                             ...filters,
-                            sort: sortBy
+                            sort: sortBy,
+                            userId: currentUserId
                         })
                     });
 
@@ -532,28 +596,6 @@
 
             // Загрузка программ при загрузке страницы
             loadPrograms();
-
-            // Обработка кнопки "В избранное" (перенесено внутрь DOMContentLoaded)
-            document.querySelectorAll('.bookmark-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const programId = this.getAttribute('data-program-id');
-                    this.classList.toggle('bookmarked');
-
-                    if (this.classList.contains('bookmarked')) {
-                        // Добавляем в избранное
-                        localStorage.setItem(`program_${programId}_bookmarked`, 'true');
-                    } else {
-                        // Удаляем из избранного
-                        localStorage.removeItem(`program_${programId}_bookmarked`);
-                    }
-                });
-
-                // Проверяем, есть ли программа в избранном при загрузке страницы
-                const programId = btn.getAttribute('data-program-id');
-                if (localStorage.getItem(`program_${programId}_bookmarked`)) {
-                    btn.classList.add('bookmarked');
-                }
-            });
         });
     </script>
 </body>
