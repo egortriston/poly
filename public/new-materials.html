@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление материала | СПбПУ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="forms.css">
+</head>
+
+<body>
+    <!-- Header (такой же как в личном кабинете) -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="image/logo01.svg" alt="Логотип СПбПУ" class="logo">
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" placeholder="Поиск..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="message-btn" id="chatBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="login-btn" onclick="window.location.href='home.html'">Личный кабинет</button>
+                </div>
+                <img src="image/logo.svg" alt="Логотип СПбПУ" class="logo-ipmt">
+            </div>
+        </div>
+    </header>
+
+    <!-- Навигация -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="materials.html">Материалы</a></li>
+                <li><a href="events.html">Мероприятия</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="programs.html">Образовательные программы</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое -->
+    <main class="main-content">
+        <div class="container">
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a> &gt;
+                <a href="home.html">Личный кабинет</a> &gt;
+                <span>Добавление материала</span>
+            </div>
+
+            <section class="material-application-section">
+                <h1 class="page-title">Добавление материала</h1>
+
+                <div class="application-steps">
+                    <div class="step active">1. Основная информация</div>
+                    <div class="step">2. Содержание</div>
+                    <div class="step">3. Подтверждение</div>
+                </div>
+
+                <form id="materialApplicationForm" class="application-form">
+                    <!-- Шаг 1: Основная информация -->
+                    <div class="form-step active" data-step="1">
+                        <div class="form-group">
+                            <label for="materialTitle">Название материала*</label>
+                            <input type="text" id="materialTitle" required
+                                placeholder="Например: Методическое пособие по веб-разработке">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="materialType">Тип материала*</label>
+                                <select id="materialType" required>
+                                    <option value="">Выберите тип</option>
+                                    <option value="Методическое пособие">Методическое пособие</option>
+                                    <option value="Лекция">Лекция</option>
+                                    <option value="Презентация">Презентация</option>
+                                    <option value="Статья">Статья</option>
+                                    <option value="Видео">Видео</option>
+                                    <option value="Другое">Другое</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="materialCategory">Категория*</label>
+                                <select id="materialCategory" required>
+                                    <option value="">Выберите категорию</option>
+                                    <option value="programming">Программирование</option>
+                                    <option value="design">Дизайн</option>
+                                    <option value="management">Менеджмент</option>
+                                    <option value="science">Наука</option>
+                                    <option value="engineering">Инженерия</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="materialAuthor">Автор(ы)</label>
+                            <input type="text" id="materialAuthor" placeholder="ФИО автора или авторов">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Обложка материала</label>
+                            <div class="image-upload-wrapper">
+                                <input type="file" id="materialImage" accept="image/*" style="display: none;">
+                                <label for="materialImage" class="image-upload-label">
+                                    <div class="image-preview" id="imagePreview">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+                                                stroke="#2E7D32" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z"
+                                                stroke="#2E7D32" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M21 15L16 10L5 21" stroke="#2E7D32" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        <span>Загрузите изображение для материала</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="file-hint">Рекомендуемый размер: 1200×630px. Допустимые форматы: JPG, PNG</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shortDescription">Краткое описание*</label>
+                            <textarea id="shortDescription" class="textarea-field textarea-medium" rows="3" required
+                                placeholder="Краткое описание материала"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" disabled>Назад</button>
+                            <button type="button" class="btn-primary next-step">Далее</button>
+                        </div>
+                    </div>
+
+                    <!-- Шаг 2: Содержание -->
+                    <div class="form-step" data-step="2">
+                        <div class="form-group">
+                            <h2>Полное описание материала</h2>
+                            <textarea id="materialDescription" class="textarea-field textarea-large" rows="5"
+                                placeholder="Подробное описание содержания материала"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="materialLink">Ссылка на материал (если есть)</label>
+                            <input type="url" id="materialLink" placeholder="https://example.com">
+                        </div>
+
+                        <div class="form-group file-upload-group">
+                            <label>Файл материала*</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="materialFile" style="display: none;">
+                                <label for="materialFile" class="file-upload-label">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+                                            stroke="#2E7D32" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M17 8L12 3L7 8" stroke="#2E7D32" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12 3V15" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Выберите файл или перетащите его сюда</span>
+                                </label>
+                                <div class="file-list" id="fileList"></div>
+                            </div>
+                            <div class="file-hint">Максимальный размер файла: 50MB. Допустимые форматы: PDF, DOC, PPT,
+                                ZIP</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="keywords">Ключевые слова</label>
+                            <input type="text" id="keywords" placeholder="Введите ключевые слова через запятую">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary prev-step">Назад</button>
+                            <button type="button" class="btn-primary next-step">Далее</button>
+                        </div>
+                    </div>
+
+                    <!-- Шаг 3: Подтверждение -->
+                    <div class="form-step" data-step="3">
+                        <div class="confirmation-section">
+                            <h3>Проверьте введенные данные</h3>
+
+                            <div class="confirmation-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Название:</span>
+                                    <span id="confirmTitle" class="detail-value"></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Тип:</span>
+                                    <span id="confirmType" class="detail-value"></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Категория:</span>
+                                    <span id="confirmCategory" class="detail-value"></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Автор:</span>
+                                    <span id="confirmAuthor" class="detail-value">Не указан</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Краткое описание:</span>
+                                    <span id="confirmShortDesc" class="detail-value"></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Полное описание:</span>
+                                    <span id="confirmFullDesc" class="detail-value">Нет описания</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Ссылка на материал:</span>
+                                    <span id="confirmLink" class="detail-value">Нет ссылки</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Файл материала:</span>
+                                    <span id="confirmFile" class="detail-value">Не загружен</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Ключевые слова:</span>
+                                    <span id="confirmKeywords" class="detail-value">Не указаны</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group confirmation-checkbox">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <label for="agreeTerms">
+                                    Я подтверждаю, что все указанные данные верны и согласен с обработкой моих
+                                    персональных данных
+                                    в соответствии с <a href="/privacy-policy" target="_blank">Политикой
+                                        конфиденциальности</a>.
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary prev-step">Назад</button>
+                            <button type="submit" class="btn-primary submit-btn">Добавить материал</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Футер (такой же как в личном кабинете) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Санкт-Петербург, Политехническая ул., 29</p>
+                    <p>+7 (812) 123-45-67</p>
+                    <p>info@spbstu.ru</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <a href="#">Расписание</a>
+                    <a href="#">Преподаватели</a>
+                    <a href="#">Библиотека</a>
+                    <a href="#">Техподдержка</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <a href="#">ВКонтакте</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>© 2023 Санкт-Петербургский политехнический университет Петра Великого. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Чат (такой же как в личном кабинете) -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Чат поддержки</h3>
+            <button class="close-chat" id="closeChat">✖</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message other">
+                Добрый день! Чем могу помочь?
+                <span class="message-time">10:42</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Введите сообщение...">
+            <button id="sendMessage">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Обработка многошаговой формы
+        document.addEventListener('DOMContentLoaded', function () {
+            const steps = document.querySelectorAll('.form-step');
+            const stepIndicators = document.querySelectorAll('.application-steps .step');
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+            const form = document.getElementById('materialApplicationForm');
+            const fileInput = document.getElementById('materialFile');
+            const fileList = document.getElementById('fileList');
+            const imageInput = document.getElementById('materialImage');
+            const imagePreview = document.getElementById('imagePreview');
+            const fileUploadWrapper = document.querySelector('.file-upload-wrapper');
+
+            let currentStep = 0;
+
+            // Общая функция для предотвращения стандартного поведения
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            // Функция для обновления списка файлов
+            function updateFileList() {
+                fileList.innerHTML = '';
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-size">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                        <button class="remove-file" data-file="${file.name}">&times;</button>
+                    `;
+                    fileList.appendChild(fileItem);
+                }
+            }
+
+            // Переход к следующему шагу
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    if (validateStep(currentStep)) {
+                        goToStep(currentStep + 1);
+                    }
+                });
+            });
+
+            // Возврат к предыдущему шагу
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    goToStep(currentStep - 1);
+                });
+            });
+
+            // Валидация шага
+            function validateStep(step) {
+                let isValid = true;
+                const currentStepEl = steps[step];
+                const inputs = currentStepEl.querySelectorAll('input[required], select[required], textarea[required]');
+
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        input.classList.add('error');
+                        isValid = false;
+                    } else {
+                        input.classList.remove('error');
+                    }
+                });
+
+                // На втором шаге проверяем, что загружен файл или указана ссылка
+                if (step === 1) {
+                    const file = fileInput.files[0];
+                    const link = document.getElementById('materialLink').value;
+                    if (!file && !link) {
+                        fileUploadWrapper.classList.add('error');
+                        isValid = false;
+                    } else {
+                        fileUploadWrapper.classList.remove('error');
+                    }
+                }
+
+                if (step === 2 && !document.getElementById('agreeTerms').checked) {
+                    document.getElementById('agreeTerms').nextElementSibling.classList.add('error');
+                    isValid = false;
+                } else if (step === 2) {
+                    document.getElementById('agreeTerms').nextElementSibling.classList.remove('error');
+                }
+
+                return isValid;
+            }
+
+            // Переход к конкретному шагу
+            function goToStep(step) {
+                if (step < 0 || step >= steps.length) return;
+
+                // Скрыть текущий шаг
+                steps[currentStep].classList.remove('active');
+                stepIndicators[currentStep].classList.remove('active');
+
+                // Показать новый шаг
+                steps[step].classList.add('active');
+                stepIndicators[step].classList.add('active');
+
+                currentStep = step;
+
+                // Обновить данные подтверждения на последнем шаге
+                if (step === 2) {
+                    updateConfirmationData();
+                }
+            }
+
+            // Обновление данных подтверждения
+            function updateConfirmationData() {
+                document.getElementById('confirmTitle').textContent = document.getElementById('materialTitle').value;
+                document.getElementById('confirmType').textContent = document.getElementById('materialType').options[document.getElementById('materialType').selectedIndex].text;
+                document.getElementById('confirmCategory').textContent = document.getElementById('materialCategory').options[document.getElementById('materialCategory').selectedIndex].text;
+
+                document.getElementById('confirmAuthor').textContent = document.getElementById('materialAuthor').value || 'Не указан';
+                document.getElementById('confirmShortDesc').textContent = document.getElementById('shortDescription').value;
+                document.getElementById('confirmFullDesc').textContent = document.getElementById('materialDescription').value || 'Нет описания';
+
+                const link = document.getElementById('materialLink').value;
+                document.getElementById('confirmLink').textContent = link || 'Нет ссылки';
+
+                const file = fileInput.files[0];
+                document.getElementById('confirmFile').textContent = file ? file.name : 'Не загружен';
+
+                const keywords = document.getElementById('keywords').value;
+                document.getElementById('confirmKeywords').textContent = keywords || 'Не указаны';
+            }
+
+            // Обработка загрузки изображения
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.addEventListener('load', function () {
+                        // Проверяем, есть ли уже изображение в превью
+                        let img = imagePreview.querySelector('img');
+                        if (!img) {
+                            img = document.createElement('img');
+                            imagePreview.insertBefore(img, imagePreview.firstChild);
+                        }
+
+                        img.src = this.result;
+                        img.style.display = 'block';
+                        imagePreview.querySelector('svg').style.display = 'none';
+                        imagePreview.querySelector('span').textContent = file.name;
+                    });
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Drag and drop для изображения
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                imagePreview.addEventListener(eventName, preventDefaults, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                imagePreview.addEventListener(eventName, function () {
+                    imagePreview.parentElement.classList.add('highlight');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                imagePreview.addEventListener(eventName, function () {
+                    imagePreview.parentElement.classList.remove('highlight');
+                }, false);
+            });
+
+            imagePreview.addEventListener('drop', function (e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0 && files[0].type.match('image.*')) {
+                    imageInput.files = files;
+                    imageInput.dispatchEvent(new Event('change'));
+                }
+            });
+
+            // Обработка выбора файла материала
+            fileInput.addEventListener('change', function () {
+                updateFileList();
+            });
+
+            // Удаление файла
+            fileList.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-file')) {
+                    fileInput.value = '';
+                    updateFileList();
+                }
+            });
+
+            // Drag and drop для файла материала
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                fileUploadWrapper.addEventListener(eventName, preventDefaults, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                fileUploadWrapper.addEventListener(eventName, function () {
+                    fileUploadWrapper.classList.add('highlight');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                fileUploadWrapper.addEventListener(eventName, function () {
+                    fileUploadWrapper.classList.remove('highlight');
+                }, false);
+            });
+
+            fileUploadWrapper.addEventListener('drop', function (e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            });
+
+            // Отправка формы
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                if (validateStep(currentStep)) {
+                    // Здесь будет код для отправки данных на сервер
+                    const formData = new FormData();
+                    formData.append('title', document.getElementById('materialTitle').value);
+                    formData.append('type', document.getElementById('materialType').value);
+                    formData.append('category', document.getElementById('materialCategory').value);
+                    formData.append('author', document.getElementById('materialAuthor').value);
+                    formData.append('shortDescription', document.getElementById('shortDescription').value);
+                    formData.append('description', document.getElementById('materialDescription').value);
+                    formData.append('link', document.getElementById('materialLink').value);
+                    formData.append('keywords', document.getElementById('keywords').value);
+
+                    // Добавление изображения
+                    const imageFile = document.getElementById('materialImage').files[0];
+                    if (imageFile) {
+                        formData.append('image', imageFile);
+                    }
+
+                    // Добавление файла материала
+                    const materialFile = document.getElementById('materialFile').files[0];
+                    if (materialFile) {
+                        formData.append('file', materialFile);
+                    }
+
+                    fetch('/api/materials', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Материал успешно добавлен!');
+                                form.reset();
+                                goToStep(0);
+                            } else {
+                                alert(data.error || 'Произошла ошибка при добавлении материала.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Произошла ошибка при добавлении материала. Пожалуйста, попробуйте позже.');
+                        });
+                }
+            });
+        });
+    </script>
+    <script src="chat.js"></script>
+</body>
+
+</html>

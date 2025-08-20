@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Материалы | СПбПУ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-materials.css">
+
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="image/logo01.svg" alt="Логотип СПбПУ" class="logo">
+
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" placeholder="Поиск..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button class="message-btn" id="chatBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                    <button class="login-btn" onclick="window.location.href='home.html'">Личный кабинет</button>
+                </div>
+                <img src="image/logo.svg" alt="Логотип СПбПУ" class="logo-ipmt">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="materials.html" class="active">Материалы</a></li>
+                <li><a href="events.html">Мероприятия</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="programs.html">Образовательные программы</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="section-header">
+                    <h2 class="section-title">Фильтры материалов</h2>
+                    <button class="btn-filter">Применить фильтры</button>
+                    <button class="btn-reset">Сбросить фильтры</button>
+                    <button class="toggle-filters-btn" id="toggleFiltersBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="filters-grid">
+                    <!-- Search Filter -->
+                    <div class="filter-group">
+                        <label for="materialSearch">Поиск по названию</label>
+                        <input type="text" id="materialSearch" placeholder="Введите название материала...">
+                    </div>
+
+                    <!-- Category Filter - теперь с Select2 -->
+                    <div class="filter-group">
+                        <label for="categoryFilter">Категория</label>
+                        <select id="categoryFilter" class="filter-select" multiple="multiple">
+                            <option value="Лекция">Лекции</option>
+                            <option value="Презентация">Презентации</option>
+                            <option value="Статья">Статьи</option>
+                            <option value="Книга">Книги</option>
+                            <option value="Видео">Видео</option>
+                            <option value="Тест">Тесты</option>
+                        </select>
+                    </div>
+
+                    <!-- Faculty Filter - теперь с Select2 -->
+                    <div class="filter-group">
+                        <label for="facultyFilter">Высшая школа</label>
+                        <select id="facultyFilter" class="filter-select" multiple="multiple">
+                            <option value="ibis">ИБиС</option>
+                            <option value="ipme">ИПМЭ</option>
+                            <option value="fiztech">Физтех</option>
+                            <option value="hse">ВШЭ</option>
+                            <option value="ime">ИМОП</option>
+                            <option value="ibmi">ИБМиБ</option>
+                        </select>
+                    </div>
+
+                    <!-- Date Filter -->
+                    <!-- <div class="filter-group">
+                        <label>Дата публикации</label>
+                        <div class="date-range">
+                            <input type="date" id="startDate" placeholder="От">
+                            <span>-</span>
+                            <input type="date" id="endDate" placeholder="До">
+                        </div>
+                    </div> -->
+
+                    <!-- Author Filter -->
+                    <div class="filter-group">
+                        <label for="authorFilter">Автор</label>
+                        <input type="text" id="authorFilter" placeholder="ФИО автора">
+                    </div>
+
+                    <!-- Tags Filter - теперь с Select2
+                    <div class="filter-group">
+                        <label for="tagsFilter">Теги</label>
+                        <select id="tagsFilter" class="filter-select" multiple="multiple">
+                            <option value="ai">AI</option>
+                            <option value="ml">Машинное обучение</option>
+                            <option value="programming">Программирование</option>
+                            <option value="data">Анализ данных</option>
+                            <option value="engineering">Инженерия</option>
+                            <option value="math">Математика</option>
+                            <option value="physics">Физика</option>
+                            <option value="biology">Биология</option>
+                        </select>
+                    </div> -->
+
+
+                </div>
+
+            </section>
+
+            <!-- Materials Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Материалы</h2>
+                    <div class="sort-options">
+                        <span>Сортировать:</span>
+                        <select class="sort-select">
+                            <option value="newest">Сначала новые</option>
+                            <option value="oldest">Сначала старые</option>
+                            <option value="popular">По популярности</option>
+                            <option value="rating">По рейтингу</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="materials-grid">
+                    <!-- Material Items will be rendered here by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Санкт-Петербург, Политехническая ул., 29</p>
+                    <p>+7 (812) 123-45-67</p>
+                    <p>info@spbstu.ru</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <a href="#">Расписание</a>
+                    <a href="#">Преподаватели</a>
+                    <a href="#">Библиотека</a>
+                    <a href="#">Техподдержка</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <a href="#">ВКонтакте</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>© 2023 Санкт-Петербургский политехнический университет Петра Великого. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Чат поддержки</h3>
+            <button class="close-chat" id="closeChat">✖</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message other">
+                Добрый день! Чем могу помочь?
+                <span class="message-time">10:42</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Введите сообщение...">
+            <button id="sendMessage">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+
+
+
+    </div>
+
+    <!-- Подключаем jQuery и Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/ru.min.js"></script>
+    <script src="chat.js"></script>
+    <script src="rating.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Инициализация Select2
+            $('#categoryFilter, #facultyFilter').select2({
+                placeholder: 'Выберите варианты',
+                allowClear: true,
+                language: 'ru',
+                width: '100%'
+            });
+
+            const toggleFiltersBtn = document.getElementById('toggleFiltersBtn');
+            const filtersSection = document.querySelector('.filters-section');
+
+            if (toggleFiltersBtn && filtersSection) {
+                toggleFiltersBtn.addEventListener('click', function () {
+                    filtersSection.classList.toggle('collapsed');
+                });
+            }
+
+            // Функция для отображения материалов
+            function renderMaterials(materials) {
+                const materialsGrid = document.querySelector('.materials-grid');
+                if (!materialsGrid) return;
+
+                materialsGrid.innerHTML = '';
+
+                if (!materials || materials.length === 0) {
+                    materialsGrid.innerHTML = '<div class="no-materials">Материалы не найдены</div>';
+                    return;
+                }
+
+                materials.forEach(material => {
+                    const materialCard = document.createElement('div');
+                    materialCard.className = 'material-card';
+
+                    // Определение типа материала
+                    let badgeClass = '';
+                    let badgeText = material.material_type || 'Материал';
+
+                    const typeClasses = {
+                        'Лекция': 'lecture',
+                        'Презентация': 'presentation',
+                        'Статья': 'article',
+                        'Книга': 'book',
+                        'Видео': 'video'
+                    };
+
+                    badgeClass = typeClasses[material.material_type] || 'other';
+
+                    // Форматирование даты
+                    const date = new Date(material.date_create);
+                    const formattedDate = date.toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+
+                    materialCard.innerHTML = `
+            <div class="material-image" style="background-image: url('/api/materials/${material.id_material || material.id}/image'), url('image/knigi.jpg')">
+                <div class="material-badge ${badgeClass}">${badgeText}</div>
+            </div>
+            <div class="material-content">
+                <h3 class="material-title">${material.material_name}</h3>
+                <div class="material-meta">
+                    <span class="material-author">${material.material_author}</span>
+                    <span class="material-date">${formattedDate}</span>
+                </div>
+                <p class="material-desc">${material.material_description}</p>
+                <div class="material-footer">
+                                <div class="material-actions">
+                                    <button class="btn-icon download-btn" title="Скачать" data-id="${material.id}">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 15V3M12 15L8 11M12 15L16 11" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M20 21H4" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <button class="btn-icon favorite-btn" title="В избранное" data-id="${material.id}">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                </div>
+            </div>
+        `;
+
+                    materialsGrid.appendChild(materialCard);
+                });
+
+                // Добавляем обработчики событий после рендеринга
+                addMaterialEventListeners();
+            }
+
+            // Функция для добавления обработчиков событий
+            function addMaterialEventListeners() {
+                // Обработчики для кнопок скачивания
+                document.querySelectorAll('.download-btn').forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const materialId = this.getAttribute('data-id');
+                        try {
+                            const response = await fetch(`/api/materials/${materialId}/download`);
+                            if (!response.ok) {
+                                throw new Error(`Ошибка скачивания: ${response.status}`);
+                            }
+                            const blob = await response.blob();
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `material_${materialId}`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            window.URL.revokeObjectURL(url);
+                        } catch (error) {
+                            console.error('Ошибка скачивания:', error);
+                            alert('Не удалось скачать материал');
+                        }
+                    });
+                });
+
+                // Обработчики для кнопок избранного
+                document.querySelectorAll('.favorite-btn').forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const materialId = this.getAttribute('data-id');
+                        try {
+                            const response = await fetch(`/api/materials/${materialId}/favorite`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ action: 'toggle' })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`Ошибка избранного: ${response.status}`);
+                            }
+
+                            const result = await response.json();
+                            if (result.isFavorite) {
+                                this.classList.add('active');
+                                this.setAttribute('title', 'Удалить из избранного');
+                            } else {
+                                this.classList.remove('active');
+                                this.setAttribute('title', 'В избранное');
+                            }
+                        } catch (error) {
+                            console.error('Ошибка:', error);
+                            alert('Не удалось выполнить действие с избранным');
+                        }
+                    });
+                });
+            }
+
+            // Обработчик для кнопки фильтрации
+            document.querySelector('.btn-filter').addEventListener('click', function () {
+                const filters = {
+                    search: document.getElementById('materialSearch').value,
+                    categories: $('#categoryFilter').val(),
+                    faculties: $('#facultyFilter').val(),
+                    startDate: document.getElementById('startDate').value,
+                    endDate: document.getElementById('endDate').value,
+                    author: document.getElementById('authorFilter').value
+                };
+
+                // Добавляем отладочную информацию
+                console.log('Отправляемые фильтры:', filters);
+
+                loadMaterials(filters);
+            });
+
+            // Обработчик для кнопки сброса фильтров
+            document.querySelector('.btn-reset').addEventListener('click', function () {
+                document.querySelectorAll('input[type="text"], input[type="date"]').forEach(input => {
+                    input.value = '';
+                });
+                $('#categoryFilter, #facultyFilter').val(null).trigger('change');
+                document.querySelector('.sort-select').value = 'newest';
+                loadMaterials({});
+            });
+
+            // Обработчик для сортировки
+            document.querySelector('.sort-select').addEventListener('change', function () {
+                const currentFilters = {
+                    search: document.getElementById('materialSearch').value,
+                    categories: $('#categoryFilter').val(),
+                    faculties: $('#facultyFilter').val(),
+                    startDate: document.getElementById('startDate').value,
+                    endDate: document.getElementById('endDate').value,
+                    author: document.getElementById('authorFilter').value
+                };
+                loadMaterials(currentFilters, this.value);
+            });
+
+            // Функция для загрузки материалов
+            async function loadMaterials(filters = {}, sortBy = document.querySelector('.sort-select').value) {
+                const materialsGrid = document.querySelector('.materials-grid');
+                if (!materialsGrid) return;
+
+                materialsGrid.innerHTML = '<div class="loading-spinner">Загрузка материалов...</div>';
+
+                try {
+                    const response = await fetch('/api/materials/filter', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            ...filters,
+                            sort: sortBy
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || data.message || `Ошибка ${response.status}`);
+                    }
+
+                    if (!data.success) {
+                        throw new Error(data.message || 'Ошибка при загрузке материалов');
+                    }
+
+                    renderMaterials(data.data);
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    materialsGrid.innerHTML = `
+            <div class="error-message">
+                Ошибка загрузки: ${error.message}
+                <button class="retry-btn">Попробовать снова</button>
+            </div>
+        `;
+
+                    // Добавляем обработчик для кнопки повтора
+                    document.querySelector('.retry-btn')?.addEventListener('click', () => loadMaterials(filters, sortBy));
+                }
+            }
+
+
+            // Загрузка материалов при загрузке страницы
+            loadMaterials();
+        });
+    </script>
+</body>
+
+</html>

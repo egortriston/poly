@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Образовательные программы | СПбПУ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-programs.css">
+    <link rel="stylesheet" href="styles-materials.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="image/logo01.svg" alt="Логотип СПбПУ" class="logo">
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" placeholder="Поиск..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="message-btn" id="chatBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="login-btn" onclick="window.location.href='home.html'">Личный кабинет</button>
+                </div>
+                <img src="image/logo.svg" alt="Логотип СПбПУ" class="logo-ipmt">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="materials.html">Материалы</a></li>
+                <li><a href="events.html">Мероприятия</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="programs.html" class="active">Образовательные программы</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="section-header">
+                    <h2 class="section-title">Фильтры программ</h2>
+                    <button class="btn-filter">Применить фильтры</button>
+                    <button class="btn-reset">Сбросить фильтры</button>
+                    <button class="toggle-filters-btn" id="toggleFiltersBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="filters-grid">
+                    <!-- Search Filter -->
+                    <div class="filter-group">
+                        <label for="programSearch">Поиск по названию</label>
+                        <input type="text" id="programSearch" placeholder="Введите название программы...">
+                    </div>
+
+                    <!-- Type Filter -->
+                    <div class="filter-group">
+                        <label for="programTypeFilter">Тип программы</label>
+                        <select id="programTypeFilter" class="filter-select" multiple="multiple">
+                            <option value="educational">Образовательная программа</option>
+                            <option value="module">Модуль</option>
+                            <option value="course">Курс</option>
+                        </select>
+                    </div>
+
+                    <!-- Faculty Filter -->
+                    <div class="filter-group">
+                        <label for="programFacultyFilter">Высшая школа</label>
+                        <select id="programFacultyFilter" class="filter-select" multiple="multiple">
+                            <option value="ibis">ИБиС</option>
+                            <option value="ipme">ИПМЭ</option>
+                            <option value="fiztech">Физтех</option>
+                            <option value="hse">ВШЭ</option>
+                        </select>
+                    </div>
+
+
+                    <div class="filter-group">
+                        <label for="programDuration">Длительность</label>
+                        <select id="programDuration" class="filter-select" multiple="multiple">
+                            <option value="">Любая</option>
+                            <option value="1">1 год</option>
+                            <option value="2">2 года</option>
+                            <option value="4">4 года</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="programLevel">Уровень</label>
+                        <select id="programLevel" class="filter-select" multiple="multiple">
+                            <option value="Бакалавриат">Бакалавриат</option>
+                            <option value="Магистратура">Магистратура</option>
+                            <option value="Аспирантура">Аспирантура</option>
+                        </select>
+                    </div>
+            </section>
+
+            <!-- Programs Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Образовательные программы</h2>
+                    <div class="sort-options">
+                        <span>Сортировать:</span>
+                        <select class="sort-select">
+                            <option value="popular">По популярности</option>
+                            <option value="newest">Сначала новые</option>
+                            <option value="duration">По длительности</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="programs-grid">
+                    <!-- Program Item 1 -->
+                    <div class="program-card">
+                        <div class="program-badge educational">Образовательная программа</div>
+                        <div class="program-image" style="background-image: url('image/student.jpg')"></div>
+                        <div class="program-content">
+                            <h3 class="program-title">Искусственный интеллект и машинное обучение</h3>
+                            <div class="program-meta">
+                                <span class="program-faculty">ИБиС</span>
+                                <span class="program-duration">2 года</span>
+                                <span class="program-level">Магистратура</span>
+                            </div>
+                            <p class="program-desc">Программа готовит специалистов в области искусственного интеллекта,
+                                машинного обучения и анализа данных.</p>
+                            <div class="program-footer">
+                                <div class="program-rating">
+                                    <div class="stars-container" data-rating="4">
+                                        <span class="star" data-value="5">★</span>
+                                        <span class="star" data-value="4">★</span>
+                                        <span class="star" data-value="3">★</span>
+                                        <span class="star" data-value="2">★</span>
+                                        <span class="star" data-value="1">★</span>
+                                    </div>
+                                    <span class="rating-count">(18)</span>
+                                </div>
+                                <div class="program-actions">
+                                    <button class="btn-icon" title="Скачать">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 15V3M12 15L8 11M12 15L16 11" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M20 21H4" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <button class="btn-icon bookmark-btn" title="В избранное" data-program-id="1">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Item 2 -->
+                    <div class="program-card">
+                        <div class="program-badge module">Модуль</div>
+                        <div class="program-image" style="background-image: url('image/student.jpg')"></div>
+                        <div class="program-content">
+                            <h3 class="program-title">Основы Data Science</h3>
+                            <div class="program-meta">
+                                <span class="program-faculty">ИПМЭ</span>
+                                <span class="program-duration">1 год</span>
+                                <span class="program-level">Бакалавриат</span>
+                            </div>
+                            <p class="program-desc">Модуль посвящен основам науки о данных, включая сбор, обработку и
+                                анализ больших данных.</p>
+                            <div class="program-footer">
+                                <div class="program-rating">
+                                    <div class="stars-container" data-rating="5">
+                                        <span class="star" data-value="5">★</span>
+                                        <span class="star" data-value="4">★</span>
+                                        <span class="star" data-value="3">★</span>
+                                        <span class="star" data-value="2">★</span>
+                                        <span class="star" data-value="1">★</span>
+                                    </div>
+                                    <span class="rating-count">(24)</span>
+                                </div>
+                                <div class="program-actions">
+                                    <button class="btn-icon" title="Скачать">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 15V3M12 15L8 11M12 15L16 11" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M20 21H4" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <button class="btn-icon bookmark-btn" title="В избранное" data-program-id="2">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Item 3 -->
+                    <div class="program-card">
+                        <div class="program-badge course">Курс</div>
+                        <div class="program-image" style="background-image: url('image/student.jpg')"></div>
+                        <div class="program-content">
+                            <h3 class="program-title">Продвинутое машинное обучение</h3>
+                            <div class="program-meta">
+                                <span class="program-faculty">Физтех</span>
+                                <span class="program-duration">6 месяцев</span>
+                                <span class="program-level">Магистратура</span>
+                            </div>
+                            <p class="program-desc">Курс охватывает продвинутые методы машинного обучения, включая
+                                глубокое обучение и нейронные сети.</p>
+                            <div class="program-footer">
+                                <div class="program-rating">
+                                    <div class="stars-container" data-rating="4">
+                                        <span class="star" data-value="5">★</span>
+                                        <span class="star" data-value="4">★</span>
+                                        <span class="star" data-value="3">★</span>
+                                        <span class="star" data-value="2">★</span>
+                                        <span class="star" data-value="1">★</span>
+                                    </div>
+                                    <span class="rating-count">(15)</span>
+                                </div>
+                                <div class="program-actions">
+                                    <button class="btn-icon" title="Скачать">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 15V3M12 15L8 11M12 15L16 11" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M20 21H4" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <button class="btn-icon bookmark-btn" title="В избранное" data-program-id="3">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Санкт-Петербург, Политехническая ул., 29</p>
+                    <p>+7 (812) 123-45-67</p>
+                    <p>info@spbstu.ru</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <a href="#">Расписание</a>
+                    <a href="#">Преподаватели</a>
+                    <a href="#">Библиотека</a>
+                    <a href="#">Техподдержка</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <a href="#">ВКонтакте</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 Санкт-Петербургский политехнический университет Петра Великого. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Чат поддержки</h3>
+            <button class="close-chat" id="closeChat">✖</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message other">
+                Добрый день! Чем могу помочь?
+                <span class="message-time">10:42</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Введите сообщение...">
+            <button id="sendMessage">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Подключаем jQuery и Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/ru.min.js"></script>
+    <script src="chat.js"></script>
+    <script src="rating.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Инициализация Select2
+            $('#programTypeFilter, #programFacultyFilter, #programDuration, #programLevel').select2({
+                placeholder: 'Выберите варианты',
+                allowClear: true,
+                language: 'ru',
+                width: '100%'
+            });
+
+            // Сброс фильтров
+            const resetBtn = document.querySelector('.btn-reset');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function () {
+                    document.getElementById('programSearch').value = '';
+                    $('#programTypeFilter, #programFacultyFilter, #programDuration, #programLevel').val(null).trigger('change');
+                    document.querySelector('.sort-select').value = 'newest'; // Или 'popular', в зависимости от дефолтной сортировки
+                    loadPrograms({}); // Загрузка всех программ после сброса
+                });
+            }
+
+            // Обработка сворачивания фильтров
+            const toggleFiltersBtn = document.getElementById('toggleFiltersBtn');
+            const filtersSection = document.querySelector('.filters-section');
+
+            if (toggleFiltersBtn && filtersSection) {
+                toggleFiltersBtn.addEventListener('click', function () {
+                    filtersSection.classList.toggle('collapsed');
+                });
+            }
+
+            // Функция для отображения программ
+            function renderPrograms(programs) {
+                const programsGrid = document.querySelector('.programs-grid');
+                if (!programsGrid) return;
+
+                programsGrid.innerHTML = '';
+
+                if (!programs || programs.length === 0) {
+                    programsGrid.innerHTML = '<div class="no-programs">Программы не найдены</div>';
+                    return;
+                }
+
+                programs.forEach(program => {
+                    const programCard = document.createElement('div');
+                    programCard.className = 'program-card';
+
+                    // Определение типа программы для бейджа
+                    let badgeClass = '';
+                    let badgeText = program.program_type || 'Программа';
+
+                    const typeClasses = {
+                        'Образовательная программа': 'educational',
+                        'Модуль': 'module',
+                        'Курс': 'course'
+                    };
+                    badgeClass = typeClasses[program.program_type] || 'other';
+
+
+                    programCard.innerHTML = `
+                        <div class="program-badge ${badgeClass}">${badgeText}</div>
+                        <div class="program-image" style="background-image: url('/api/programs/${program.id_program}/image'), url('image/student.jpg')"></div>
+                        <div class="program-content">
+                            <h3 class="program-title">${program.program_name || 'Без названия'}</h3>
+                            <div class="program-meta">
+                                ${program.program_faculty ? `<span class="program-faculty">${program.program_faculty}</span>` : ''}
+                                ${program.program_duration ? `<span class="program-duration">${program.program_duration}</span>` : ''}
+                                ${program.program_level ? `<span class="program-level">${program.program_level}</span>` : ''}
+                            </div>
+                            <p class="program-desc">${program.program_description || ''}</p>
+                            <div class="program-footer">
+                                <!-- Если рейтинг применяется к программам -->
+                                <div class="program-rating">
+                                     <div class="stars-container" data-rating="${program.rating || 0}">
+                                        <span class="star" data-value="5">★</span>
+                                        <span class="star" data-value="4">★</span>
+                                        <span class="star" data-value="3">★</span>
+                                        <span class="star" data-value="2">★</span>
+                                        <span class="star" data-value="1">★</span>
+                                    </div>
+                                    <span class="rating-count">(${program.rating_count || 0})</span>
+                                </div>
+                                <div class="program-actions">
+                                    <!-- Кнопка для ссылки на программу, если есть program_link -->
+                                    ${program.program_link ? `<a href="${program.program_link}" class="btn-icon" title="Подробнее" target="_blank">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M15 3H21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </a>` : ''}
+
+                                    <button class="btn-icon bookmark-btn" title="В избранное" data-program-id="${program.id_program}">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    programsGrid.appendChild(programCard);
+                });
+                // // Инициализация обработчиков рейтинга после рендеринга
+                // initRating();
+            }
+
+            // Функция для загрузки программ
+            async function loadPrograms(filters = {}, sortBy = document.querySelector('.sort-select').value) {
+                const programsGrid = document.querySelector('.programs-grid');
+                if (!programsGrid) return;
+
+                programsGrid.innerHTML = '<div class="loading-spinner">Загрузка программ...</div>';
+
+                try {
+                    const response = await fetch('/api/programs/filter', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            ...filters,
+                            sort: sortBy
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || data.message || `Ошибка ${response.status}`);
+                    }
+
+                    if (!data.success) {
+                        throw new Error(data.message || 'Ошибка при загрузке программ');
+                    }
+
+                    renderPrograms(data.data);
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    programsGrid.innerHTML = `
+                        <div class="error-message">
+                            Ошибка загрузки: ${error.message}
+                            <button class="retry-btn">Попробовать снова</button>
+                        </div>
+                    `;
+
+                    // Добавляем обработчик для кнопки повтора
+                    document.querySelector('.retry-btn')?.addEventListener('click', () => loadPrograms(filters, sortBy));
+                }
+            }
+
+            // Обработчик для кнопки фильтрации
+            document.querySelector('.btn-filter').addEventListener('click', function () {
+                const filters = {
+                    search: document.getElementById('programSearch').value,
+                    type: $('#programTypeFilter').val(),
+                    faculty: $('#programFacultyFilter').val(), // Обратите внимание: фильтрация по факультету пока не реализована в контроллере
+                    duration: $('#programDuration').val(), // Обратите внимание: фильтрация по длительности пока не реализована в контроллере
+                    level: $('#programLevel').val() // Обратите внимание: фильтрация по уровню пока не реализована в контроллере
+                };
+                loadPrograms(filters);
+            });
+
+            // Обработчик для сортировки
+            document.querySelector('.sort-select').addEventListener('change', function () {
+                const currentFilters = {
+                    search: document.getElementById('programSearch').value,
+                    type: $('#programTypeFilter').val(),
+                    faculty: $('#programFacultyFilter').val(),
+                    duration: $('#programDuration').val(),
+                    level: $('#programLevel').val()
+                };
+                loadPrograms(currentFilters, this.value);
+            });
+
+            // Загрузка программ при загрузке страницы
+            loadPrograms();
+
+            // Обработка кнопки "В избранное" (перенесено внутрь DOMContentLoaded)
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const programId = this.getAttribute('data-program-id');
+                    this.classList.toggle('bookmarked');
+
+                    if (this.classList.contains('bookmarked')) {
+                        // Добавляем в избранное
+                        localStorage.setItem(`program_${programId}_bookmarked`, 'true');
+                    } else {
+                        // Удаляем из избранного
+                        localStorage.removeItem(`program_${programId}_bookmarked`);
+                    }
+                });
+
+                // Проверяем, есть ли программа в избранном при загрузке страницы
+                const programId = btn.getAttribute('data-program-id');
+                if (localStorage.getItem(`program_${programId}_bookmarked`)) {
+                    btn.classList.add('bookmarked');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

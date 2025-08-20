@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | СПбПУ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="image/logo01.svg" alt="Логотип СПбПУ" class="logo">
+
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" placeholder="Поиск..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button class="message-btn" id="chatBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                    <button class="login-btn active">Личный кабинет</button>
+                </div>
+                <img src="image/logo.svg" alt="Логотип СПбПУ" class="logo-ipmt">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="materials.html">Материалы</a></li>
+                <li><a href="events.html">Мероприятия</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="programs.html">Образовательные программы</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Личная информация -->
+            <section class="section profile-section">
+                <div class="section-headers">
+                    <h2 class="section-title">Личные данные</h2>
+                    <button class="logout-btn" title="Выйти">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <figure class="profile-avatar">
+                        <div class="avatar-container">
+                            <img src="image/images.png" alt="image/images.png" id="userAvatar">
+                            <label for="avatarInput" class="avatar-upload-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M19 4H5C4.44772 4 4 4.44772 4 5V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V5C20 4.44772 19.5523 4 19 4Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M21 15L17 11L5 20" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                            </label>
+                        </div>
+                        <figcaption>
+                            <button class="btn-primary edit-btn">Редактировать</button>
+                            <button class="btn-primary save-btn" style="display: none;">Сохранить</button>
+                        </figcaption>
+                        <div class="form-group about-group">
+                            <label for="interests">О себе</label>
+                            <textarea id="interests"
+                                readonly>Искусственный интеллект, машинное обучение, анализ данных</textarea>
+                        </div>
+                    </figure>
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label for="fullname">ФИО</label>
+                            <input type="text" id="fullname" value="Иванов Иван Иванович" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Электронная почта</label>
+                            <input type="email" id="email" value="ivanov@edu.spbstu.ru" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="faculty">Высшая школа</label>
+                            <input type="text" id="faculty" value="ВШБИ" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="group">Должность</label>
+                            <input type="text" id="group" value="РОП" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" value="+7 (900) 123-45-67" readonly>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Предложить контент -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Предложить контент</h2>
+                </div>
+                <div class="content-suggestion">
+                    <p>Вы можете предложить новость, материал или мероприятие для публикации на сайте</p>
+                    <div class="suggestion-buttons">
+                        <button class="btn-primary" onclick="window.location.href='new-news.html'">Предложить
+                            новость</button>
+                        <button class="btn-primary" onclick="window.location.href='new-materials.html'">Предложить
+                            материал</button>
+                        <button class="btn-primary" onclick="window.location.href='new-events.html'">Предложить
+                            мероприятие</button>
+                        <button class="btn-primary" onclick="window.location.href='new-programs.html'">Предложить
+                            ОП</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Избранное -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Избранное</h2>
+                    <a href="#" class="see-all">Все избранное→</a>
+                </div>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">Избранное 1</h3>
+                            <div class="item-date">Добавлено: 15 мая 2023</div>
+                            <p class="item-desc">Сравнительный анализ алгоритмов машинного обучения для задач
+                                классификации</p>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">Избранное 2</h3>
+                            <div class="item-date">Добавлено: 10 мая 2023</div>
+                            <p class="item-desc">Практическое руководство по работе с нейронными сетями</p>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ваши материалы -->
+            <section class="section" id="user-materials-section">
+                <div class="section-header">
+                    <h2 class="section-title">Ваши материалы</h2>
+                    <a href="#" class="see-all">Все материалы →</a>
+                </div>
+                <div class="items-grid"></div>
+            </section>
+
+            <!-- Ваши новости -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Ваши новости</h2>
+                    <a href="#" class="see-all">Все новости →</a>
+                </div>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">Конференция по ИИ</h3>
+                            <div class="item-date">20 июня 2023</div>
+                            <p class="item-desc">Отчет о участии в международной конференции по искусственному
+                                интеллекту</p>
+                            <div class="item-status published">Опубликовано</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ваши мероприятия -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Ваши мероприятия</h2>
+                    <a href="#" class="see-all">Все мероприятия →</a>
+                </div>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">Семинар по Data Science</h3>
+                            <div class="item-date">25 июня 2023 | 14:00</div>
+                            <p class="item-desc">Практическое применение методов анализа данных в научных исследованиях
+                            </p>
+                            <div class="item-status approved">Утверждено</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ваши образовательные программы -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Ваши программы</h2>
+                    <a href="#" class="see-all">Все программы →</a>
+                </div>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-image" style="background-image: url('image/5a32704a30a5a316941684.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">Курс по машинному обучению</h3>
+                            <div class="item-date">Набор до 30 июня</div>
+                            <p class="item-desc">Практический курс по основам машинного обучения для начинающих</p>
+                            <div class="item-status draft">Черновик</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+        </div>
+
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Санкт-Петербург, Политехническая ул., 29</p>
+                    <p>+7 (812) 123-45-67</p>
+                    <p>info@spbstu.ru</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <a href="#">Расписание</a>
+                    <a href="#">Преподаватели</a>
+                    <a href="#">Библиотека</a>
+                    <a href="#">Техподдержка</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <a href="#">ВКонтакте</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>© 2023 Санкт-Петербургский политехнический университет Петра Великого. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Чат поддержки</h3>
+            <button class="close-chat" id="closeChat">✖</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message other">
+                Добрый день! Чем могу помочь?
+                <span class="message-time">10:42</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Введите сообщение...">
+            <button id="sendMessage">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('isAuth')) {
+            window.location.href = 'login.html';
+        }
+
+        // Получаем пользователя из localStorage
+        function getUserFromStorage() {
+            const user = localStorage.getItem('user');
+            return user ? JSON.parse(user) : null;
+        }
+
+        // Заполняем поля профиля
+        function fillProfileFields(user) {
+            document.getElementById('fullname').value = user?.user_name || '';
+            document.getElementById('email').value = user?.user_mail || '';
+            document.getElementById('faculty').value = user?.user_school || '';
+            document.getElementById('group').value = user?.user_post || '';
+            document.getElementById('phone').value = user?.user_phone || '';
+            document.getElementById('interests').value = user?.user_description || '';
+            // Подставляем аватар
+            const userId = user?.id_user || user?.id;
+            const avatar = document.getElementById('userAvatar');
+            if (userId) {
+                avatar.onerror = function () {
+                    this.onerror = null;
+                    this.src = 'image/images.png';
+                };
+                avatar.src = `/api/users/${userId}/photo?${Date.now()}`;
+            } else {
+                avatar.src = 'image/images.png';
+            }
+        }
+
+        // Функция для отображения своих материалов
+        async function loadUserMaterials() {
+            const user = getUserFromStorage();
+            if (!user) return;
+            const userId = user.id_user || user.id;
+            const container = document.querySelector('#user-materials-section .items-grid');
+            if (!container) return;
+            container.innerHTML = '<div>Загрузка...</div>';
+            try {
+                const response = await fetch(`/api/materials/user/${userId}`);
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                    container.innerHTML = '<div>Ошибка загрузки материалов</div>';
+                    return;
+                }
+                if (!data.data.length) {
+                    container.innerHTML = '<div>У вас пока нет материалов</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                // Сортируем по дате создания (убывание)
+                const sortedMaterials = data.data.sort((a, b) => new Date(b.date_create) - new Date(a.date_create));
+                // Берём только 3 последних
+                sortedMaterials.slice(0, 3).forEach(material => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-image" style="background-image: url('/api/materials/${material.id_material}/image'), url('image/knigi.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">${material.material_name}</h3>
+                            <div class="item-date">Добавлено: ${new Date(material.date_create).toLocaleDateString('ru-RU')}</div>
+                            <p class="item-desc">${material.material_description || ''}</p>
+                            <div class="item-status ${material.material_status === 'Одобрено' ? 'published' : material.material_status === 'на модерации' ? 'pending' : 'draft'}">
+                                ${material.material_status}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                container.innerHTML = '<div>Ошибка сети</div>';
+            }
+        }
+
+        // Функция для отображения своих мероприятий
+        async function loadUserEvents() {
+            const user = getUserFromStorage();
+            if (!user) return;
+            const userId = user.id_user || user.id;
+            // Находим контейнер для мероприятий
+            const container = document.querySelectorAll('.section')[5].querySelector('.items-grid');
+            if (!container) return;
+            container.innerHTML = '<div>Загрузка...</div>';
+            try {
+                const response = await fetch(`/api/events/user/${userId}`);
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                    container.innerHTML = '<div>Ошибка загрузки мероприятий</div>';
+                    return;
+                }
+                if (!data.data.length) {
+                    container.innerHTML = '<div>У вас пока нет мероприятий</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                // Сортируем по дате создания (убывание)
+                const sortedEvents = data.data.sort((a, b) => new Date(b.date_create) - new Date(a.date_create));
+                // Берём только 3 последних
+                sortedEvents.slice(0, 3).forEach(event => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-image" style="background-image: url('/api/events/${event.id_event}/image'), url('image/003A0384.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">${event.event_name}</h3>
+                            <div class="item-date">${event.start ? new Date(event.start).toLocaleDateString('ru-RU') + (event.time_start ? ' | ' + event.time_start : '') : ''}</div>
+                            <p class="item-desc">${event.event_description || ''}</p>
+                            <div class="item-status ${event.event_status === 'Одобрено' ? 'approved' : event.event_status === 'на модерации' ? 'pending' : 'draft'}">${event.event_status}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                container.innerHTML = '<div>Ошибка сети</div>';
+            }
+        }
+
+        // Функция для отображения своих новостей
+        async function loadUserNews() {
+            const user = getUserFromStorage();
+            if (!user) return;
+            const userId = user.id_user || user.id;
+            // Индекс секции 'Ваши новости' (найти по заголовку)
+            const sections = document.querySelectorAll('.section');
+            let container = null;
+            sections.forEach(section => {
+                const title = section.querySelector('.section-title');
+                if (title && title.textContent.trim() === 'Ваши новости') {
+                    container = section.querySelector('.items-grid');
+                }
+            });
+            if (!container) return;
+            container.innerHTML = '<div>Загрузка...</div>';
+            try {
+                const response = await fetch(`/api/news/user/${userId}`);
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                    container.innerHTML = '<div>Ошибка загрузки новостей</div>';
+                    return;
+                }
+                if (!data.data.length) {
+                    container.innerHTML = '<div>У вас пока нет новостей</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                // Сортируем по дате создания (убывание)
+                const sortedNews = data.data.sort((a, b) => new Date(b.date_create) - new Date(a.date_create));
+                // Берём только 3 последних
+                sortedNews.slice(0, 3).forEach(news => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-image" style="background-image: url('/api/news/${news.id_news}/image'), url('image/5a32704a30a5a316941684.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">${news.name_news}</h3>
+                            <div class="item-date">${news.news_date ? new Date(news.news_date).toLocaleDateString('ru-RU') : ''}</div>
+                            <p class="item-desc">${news.news_text || ''}</p>
+                            <div class="item-status ${news.news_status === 'Одобрено' ? 'published' : news.news_status === 'на модерации' ? 'pending' : 'draft'}">${news.news_status}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                container.innerHTML = '<div>Ошибка сети</div>';
+            }
+        }
+
+        // Функция для отображения своих программ
+        async function loadUserPrograms() {
+            const user = getUserFromStorage();
+            if (!user) return;
+            const userId = user.id_user || user.id;
+            // Находим контейнер для программ
+            const sections = document.querySelectorAll('.section');
+            let container = null;
+            sections.forEach(section => {
+                const title = section.querySelector('.section-title');
+                if (title && title.textContent.trim() === 'Ваши программы') {
+                    container = section.querySelector('.items-grid');
+                }
+            });
+            if (!container) return;
+            container.innerHTML = '<div>Загрузка...</div>';
+            try {
+                const response = await fetch(`/api/programs/user/${userId}`);
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                    container.innerHTML = '<div>Ошибка загрузки программ</div>';
+                    return;
+                }
+                if (!data.data.length) {
+                    container.innerHTML = '<div>У вас пока нет программ</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                // Сортируем по дате создания (убывание)
+                const sortedPrograms = data.data.sort((a, b) => new Date(b.date_create) - new Date(a.date_create));
+                // Берём только 3 последних
+                sortedPrograms.slice(0, 3).forEach(program => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-image" style="background-image: url('/api/programs/${program.id_program}/image'), url('image/student.jpg')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">${program.program_name}</h3>
+                            <div class="item-date">${program.date_create ? 'Набор до ' + new Date(program.date_create).toLocaleDateString('ru-RU') : ''}</div>
+                            <p class="item-desc">${program.program_description || ''}</p>
+                            <div class="item-status ${program.program_status === 'Одобрено' ? 'published' : program.program_status === 'на модерации' ? 'pending' : 'draft'}">${program.program_status}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                container.innerHTML = '<div>Ошибка сети</div>';
+            }
+        }
+
+        // При загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            // Подсветка активной кнопки личного кабинета
+            const loginBtn = document.querySelector('.login-btn');
+            if (loginBtn) {
+                loginBtn.classList.add('active');
+            }
+
+            // Заполняем профиль
+            const user = getUserFromStorage();
+            if (user) {
+                fillProfileFields(user);
+            }
+
+            // Обработка формы
+            const saveBtn = document.querySelector('.save-btn');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', async function () {
+                    // Собираем новые значения
+                    const updatedUser = {
+                        user_name: document.getElementById('fullname').value,
+                        user_mail: document.getElementById('email').value,
+                        user_school: document.getElementById('faculty').value,
+                        user_post: document.getElementById('group').value,
+                        user_phone: document.getElementById('phone').value,
+                        user_description: document.getElementById('interests').value
+                    };
+                    try {
+                        // Отправляем PUT на сервер
+                        const userId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
+                        const response = await fetch(`/api/users/${userId}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(updatedUser)
+                        });
+                        const data = await response.json();
+                        if (!response.ok) {
+                            alert(data.error || 'Ошибка сохранения');
+                            return;
+                        }
+                        // Обновляем localStorage
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        alert('Изменения сохранены');
+                        // Делаем поля readonly
+                        document.querySelectorAll('.profile-form input, .profile-form textarea').forEach(field => {
+                            field.setAttribute('readonly', 'readonly');
+                        });
+                        document.getElementById('interests').setAttribute('readonly', 'readonly');
+                        // Скрываем кнопку загрузки аватара
+                        const avatarUploadBtn = document.querySelector('.avatar-upload-btn');
+                        if (avatarUploadBtn) {
+                            avatarUploadBtn.style.display = 'none';
+                        }
+                        // Показываем кнопку "Редактировать", скрываем "Сохранить"
+                        document.querySelector('.edit-btn').style.display = 'block';
+                        document.querySelector('.save-btn').style.display = 'none';
+                    } catch (err) {
+                        alert('Ошибка сети: ' + err.message);
+                    }
+                });
+            }
+            loadUserMaterials();
+            loadUserEvents();
+            loadUserNews();
+            loadUserPrograms();
+        });
+
+
+
+
+        const logoutBtn = document.querySelector('.logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function () {
+                if (confirm('Вы уверены, что хотите выйти из личного кабинета?')) {
+                    localStorage.removeItem('isAuth');
+                    localStorage.removeItem('user'); // удаляем данные пользователя
+                    alert('Вы успешно вышли из системы');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+        const editBtn = document.querySelector('.edit-btn');
+        const saveBtn = document.querySelector('.save-btn');
+        const avatarInput = document.getElementById('avatarInput');
+        const userAvatar = document.getElementById('userAvatar');
+        const avatarUploadBtn = document.querySelector('.avatar-upload-btn');
+        const formFields = document.querySelectorAll('.profile-form input, .profile-form textarea');
+        const interestsTextarea = document.getElementById('interests');
+
+        // Инициализация - скрываем кнопку загрузки аватара
+        if (avatarUploadBtn) {
+            avatarUploadBtn.style.display = 'none';
+        }
+
+        // Обработчик кнопки "Редактировать"
+        if (editBtn) {
+            editBtn.addEventListener('click', function () {
+                // Показываем кнопку "Сохранить" и скрываем "Редактировать"
+                editBtn.style.display = 'none';
+                saveBtn.style.display = 'block';
+
+                // Включаем редактирование полей
+                formFields.forEach(field => {
+                    field.removeAttribute('readonly');
+                });
+
+                // Включаем редактирование textarea
+                interestsTextarea.removeAttribute('readonly');
+
+                // Показываем кнопку загрузки аватара
+                if (avatarUploadBtn) {
+                    avatarUploadBtn.style.display = 'flex';
+                }
+            });
+        }
+
+        // Обработчик кнопки "Сохранить"
+        if (saveBtn) {
+            saveBtn.addEventListener('click', function () {
+                // Показываем кнопку "Редактировать" и скрываем "Сохранить"
+                editBtn.style.display = 'block';
+                saveBtn.style.display = 'none';
+
+                // Отключаем редактирование полей
+                formFields.forEach(field => {
+                    field.setAttribute('readonly', 'readonly');
+                });
+
+                // Отключаем редактирование textarea
+                interestsTextarea.setAttribute('readonly', 'readonly');
+
+                // Скрываем кнопку загрузки аватара
+                if (avatarUploadBtn) {
+                    avatarUploadBtn.style.display = 'none';
+                }
+
+                // Показываем сообщение о сохранении
+                alert('Изменения сохранены');
+
+                // Здесь можно добавить код для сохранения данных на сервер
+                // saveProfileData();
+            });
+        }
+
+        // Обработка загрузки нового аватара
+        if (avatarInput) {
+            avatarInput.addEventListener('change', async function (e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    const userId = getUserFromStorage()?.id_user || getUserFromStorage()?.id;
+                    const formData = new FormData();
+                    formData.append('photo', file);
+
+                    try {
+                        const response = await fetch(`/api/users/${userId}/photo`, {
+                            method: 'PUT',
+                            body: formData
+                        });
+                        const data = await response.json();
+                        if (!response.ok) {
+                            alert(data.error || 'Ошибка загрузки фото');
+                            return;
+                        }
+                        // Обновляем localStorage
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        // Обновляем аватар на странице
+                        userAvatar.onerror = function () {
+                            this.onerror = null;
+                            this.src = 'image/images.png';
+                        };
+                        userAvatar.src = `/api/users/${userId}/photo?${Date.now()}`;
+                    } catch (err) {
+                        alert('Ошибка сети: ' + err.message);
+                    }
+                }
+            });
+        }
+
+    </script>
+    <script src="chat.js"></script>
+</body>
+
+</html>

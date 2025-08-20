@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПбПУ - Главная</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="image/logo01.svg" alt="Логотип СПбПУ" class="logo">
+
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" placeholder="Поиск..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button class="message-btn" id="chatBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                    <button class="login-btn" onclick="window.location.href='home.html'">Личный кабинет</button>
+                </div>
+                <img src="image/logo.svg" alt="Логотип СПбПУ" class="logo-ipmt">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="materials.html">Материалы</a></li>
+                <li><a href="events.html">Мероприятия</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="programs.html">Образовательные программы</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Чат поддержки</h3>
+            <button class="close-chat" id="closeChat">✖</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message other">
+                Добрый день! Чем могу помочь?
+                <span class="message-time">10:42</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Введите сообщение...">
+            <button id="sendMessage">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="university-hero">
+        <!-- Слайды -->
+        <div class="slides-container">
+            <div class="slide active">
+                <div class="slide-overlay"></div>
+                <img class="bg-image" src="image/167756938517850582.jpg" alt="Кампус СПбПУ">
+                <div class="slide-content">
+                    <h2 class="slide-title"><span>СПБПУ</span><br> Институт
+                        Промыщленного Менеджмента, Экономики и Торговли</h2>
+                    <p class="slide-text">Лидер в подготовке экспертов для бизнеса и промышленности. Место, где
+                        рождаются будущие топ-менеджеры и предприниматели!</p>
+                    <div class="slide-buttons">
+                        <button class="btn-outline">Читать больше</button>
+                        <button class="btn-primary" onclick="window.location.href='home.html'"">Личный кабинет</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" slide">
+                            <div class="slide-overlay"></div>
+                            <img class="bg-image" src="image/Xr93YLZP9j0.jpg" alt="Научная лаборатория">
+                            <div class="slide-content">
+                                <h2 class="slide-title">Научные <span>исследования</span></h2>
+                                <p class="slide-text">Передовые исследования в области инженерии, IT и естественных наук
+                                    на
+                                    современном оборудовании.</p>
+
+                            </div>
+                    </div>
+
+                    <div class="slide">
+                        <div class="slide-overlay"></div>
+                        <img class="bg-image" src="image/xl3wgow57wmemjbdvqd0lknj70kcleh8.jpg" alt="Студенты СПбПУ">
+                        <div class="slide-content">
+                            <h2 class="slide-title">Мероприятия и <span>материалы</span></h2>
+                            <p class="slide-text">Активная внеучебная деятельность, спорт, творчество и международные
+                                программы
+                                обмена.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Навигация -->
+                <div class="slider-nav">
+                    <button class="nav-btn prev-btn" aria-label="Предыдущий слайд">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                    </button>
+
+                    <div class="pagination">
+                        <span class="page active">01</span>
+                        <span class="page">02</span>
+                        <span class="page">03</span>
+                    </div>
+
+                    <button class="nav-btn next-btn" aria-label="Следующий слайд">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 6l6 6-6 6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="container">
+                    <!-- News Section -->
+                    <section class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Новости</h2>
+                            <a href="news.html" class="see-all">Все новости →</a>
+                        </div>
+                        <div class="items-grid">
+                            <!-- News Item 1 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Заголовок новости 1</h3>
+                                    <div class="item-date">10 мая 2023</div>
+                                    <p class="item-desc">Краткое описание новости в несколько строк...</p>
+                                </div>
+                            </div>
+
+                            <!-- News Item 2 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Заголовок новости 2</h3>
+                                    <div class="item-date">8 мая 2023</div>
+                                    <p class="item-desc">Краткое описание новости в несколько строк...</p>
+                                </div>
+                            </div>
+
+                            <!-- News Item 3 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Заголовок новости 3</h3>
+                                    <div class="item-date">5 мая 2023</div>
+                                    <p class="item-desc">Краткое описание новости в несколько строк...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Events Section -->
+                    <section class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Мероприятия</h2>
+                            <a href="events.html" class="see-all">Все мероприятия →</a>
+                        </div>
+                        <div class="items-grid">
+                            <!-- Event Item 1 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название мероприятия 1</h3>
+                                    <div class="item-date">15 мая 2023 | 10:00</div>
+                                    <p class="item-desc">Краткое описание мероприятия...</p>
+                                </div>
+                            </div>
+
+                            <!-- Event Item 2 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название мероприятия 2</h3>
+                                    <div class="item-date">18 мая 2023 | 14:00</div>
+                                    <p class="item-desc">Краткое описание мероприятия...</p>
+                                </div>
+                            </div>
+
+                            <!-- Event Item 3 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название мероприятия 3</h3>
+                                    <div class="item-date">20 мая 2023 | 11:00</div>
+                                    <p class="item-desc">Краткое описание мероприятия...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Materials Section -->
+                    <section class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Материалы</h2>
+                            <a href="materials.html" class="see-all">Все материалы →</a>
+                        </div>
+                        <div class="items-grid">
+                            <!-- Material Item 1 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название материала 1</h3>
+                                    <div class="item-date">Добавлено: 3 мая 2023</div>
+                                    <p class="item-desc">Краткое описание материала...</p>
+                                </div>
+                            </div>
+
+                            <!-- Material Item 2 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название материала 2</h3>
+                                    <div class="item-date">Добавлено: 1 мая 2023</div>
+                                    <p class="item-desc">Краткое описание материала...</p>
+                                </div>
+                            </div>
+
+                            <!-- Material Item 3 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название материала 3</h3>
+                                    <div class="item-date">Добавлено: 28 апреля 2023</div>
+                                    <p class="item-desc">Краткое описание материала...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+
+
+                    <!-- Programs Section -->
+                    <section class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Образовательные программы</h2>
+                            <a href="programs.html" class="see-all">Все программы →</a>
+                        </div>
+                        <div class="items-grid">
+                            <!-- Program Item 1 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название программы 1</h3>
+                                    <div class="item-date">Набор открыт до 30 июня</div>
+                                    <p class="item-desc">Краткое описание программы...</p>
+                                </div>
+                            </div>
+
+                            <!-- Program Item 2 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название программы 2</h3>
+                                    <div class="item-date">Набор открыт до 15 июля</div>
+                                    <p class="item-desc">Краткое описание программы...</p>
+                                </div>
+                            </div>
+
+                            <!-- Program Item 3 -->
+                            <div class="item-card">
+                                <div class="item-image"
+                                    style="background-image: url('https://vecherka.spb.ru/wp-content/uploads/2021/01/21-15.jpg')">
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title">Название программы 3</h3>
+                                    <div class="item-date">Набор открыт до 1 августа</div>
+                                    <p class="item-desc">Краткое описание программы...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+
+
+
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="footer-content">
+                        <div class="footer-section">
+                            <h3>Контакты</h3>
+                            <p>Санкт-Петербург, Политехническая ул., 29</p>
+                            <p>+7 (812) 123-45-67</p>
+                            <p>info@spbstu.ru</p>
+                        </div>
+
+                        <div class="footer-section">
+                            <h3>Быстрые ссылки</h3>
+                            <a href="#">Расписание</a>
+                            <a href="#">Преподаватели</a>
+                            <a href="#">Библиотека</a>
+                            <a href="#">Для абитуриентов</a>
+                        </div>
+
+                        <div class="footer-section">
+                            <h3>Социальные сети</h3>
+                            <a href="#">ВКонтакте</a>
+                            <a href="#">Telegram</a>
+                            <a href="#">YouTube</a>
+                            <a href="#">Twitter</a>
+                        </div>
+                    </div>
+
+                    <div class="copyright">
+                        <p>© 2023 Санкт-Петербургский политехнический университет Петра Великого. Все права защищены.
+                        </p>
+                    </div>
+                </div>
+            </footer>
+
+
+            <script>
+                // Слайдер университетского героя
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Получаем элементы слайдера
+                    const slides = document.querySelectorAll('.slide');
+                    const pages = document.querySelectorAll('.pagination .page');
+                    const prevBtn = document.querySelector('.prev-btn');
+                    const nextBtn = document.querySelector('.next-btn');
+
+                    let currentSlide = 0;
+                    const totalSlides = slides.length;
+
+                    // Функция для показа слайда
+                    function showSlide(index) {
+                        // Скрываем все слайды
+                        slides.forEach(slide => slide.classList.remove('active'));
+                        // Убираем активный класс у всех страниц
+                        pages.forEach(page => page.classList.remove('active'));
+
+                        // Показываем текущий слайд
+                        slides[index].classList.add('active');
+                        // Активируем соответствующую страницу
+                        pages[index].classList.add('active');
+
+                        currentSlide = index;
+                    }
+
+                    // Функция для перехода к следующему слайду
+                    function nextSlide() {
+                        currentSlide = (currentSlide + 1) % totalSlides;
+                        showSlide(currentSlide);
+                    }
+
+                    // Функция для перехода к предыдущему слайду
+                    function prevSlide() {
+                        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                        showSlide(currentSlide);
+                    }
+
+                    // Обработчики событий для кнопок
+                    nextBtn.addEventListener('click', nextSlide);
+                    prevBtn.addEventListener('click', prevSlide);
+
+                    // Обработчики событий для пагинации
+                    pages.forEach((page, index) => {
+                        page.addEventListener('click', () => showSlide(index));
+                    });
+
+                    // Автоматическое перелистывание слайдов каждые 5 секунд
+                    let slideInterval = setInterval(nextSlide, 5000);
+
+                    // Остановка автоматического перелистывания при наведении
+                    const slider = document.querySelector('.university-hero');
+                    slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+                    slider.addEventListener('mouseleave', () => {
+                        clearInterval(slideInterval);
+                        slideInterval = setInterval(nextSlide, 5000);
+                    });
+
+                    // Показываем первый слайд при загрузке
+                    showSlide(0);
+                });
+
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    fetch('/api/main')
+                        .then(res => res.json())
+                        .then(data => {
+                            // --- Новости ---
+                            const newsGrid = document.querySelectorAll('.section')[0].querySelector('.items-grid');
+                            newsGrid.innerHTML = '';
+                            data.news.forEach(item => {
+                                newsGrid.innerHTML += `
+                                <div class="item-card">
+                                    <div class="item-image" style="background-image: url('/api/news/${item.id_news}/image'), url('image/pi_novosti_sentyabr_1.jpg')"></div>
+                                    <div class="item-content">
+                                        <h3 class="item-title">${item.name_news || 'Без названия'}</h3>
+                                        <div class="item-date">${item.news_date ? new Date(item.news_date).toLocaleDateString() : ''}</div>
+                                        <p class="item-desc">${item.news_text || ''}</p>
+                                    </div>
+                                </div>`;
+                            });
+
+                            // --- Мероприятия ---
+                            const eventsGrid = document.querySelectorAll('.section')[1].querySelector('.items-grid');
+                            eventsGrid.innerHTML = '';
+                            data.events.forEach(item => {
+                                eventsGrid.innerHTML += `
+                                <div class="item-card">
+                                    <div class="item-image" style="background-image: url('/api/events/${item.id_event}/image'), url('image/003A0384.jpg')"></div>
+                                    <div class="item-content">
+                                        <h3 class="item-title">${item.event_name || 'Без названия'}</h3>
+                                        <div class="item-date">${item.start ? new Date(item.start).toLocaleString() : ''}</div>
+                                        <p class="item-desc">${item.event_description || ''}</p>
+                                    </div>
+                                </div>`;
+                            });
+
+                            // --- Материалы ---
+                            const materialsGrid = document.querySelectorAll('.section')[2].querySelector('.items-grid');
+                            materialsGrid.innerHTML = '';
+                            data.materials.forEach(item => {
+                                materialsGrid.innerHTML += `
+                                <div class="item-card">
+                                    <div class="item-image" style="background-image: url('/api/materials/${item.id_material}/image'), url('image/knigi.jpg')"></div>
+                                    <div class="item-content">
+                                        <h3 class="item-title">${item.material_name || 'Без названия'}</h3>
+                                        <div class="item-date">${item.date_create ? 'Добавлено: ' + new Date(item.date_create).toLocaleDateString() : ''}</div>
+                                        <p class="item-desc">${item.material_description || ''}</p>
+                                    </div>
+                                </div>`;
+                            });
+
+                            // --- Программы ---
+                            const programsGrid = document.querySelectorAll('.section')[3].querySelector('.items-grid');
+                            programsGrid.innerHTML = '';
+                            data.programs.forEach(item => {
+                                programsGrid.innerHTML += `
+                                <div class="item-card">
+                                    <div class="item-image" style="background-image: url('/api/programs/${item.id_program}/image'), url('image/student.jpg')"></div>
+                                    <div class="item-content">
+                                        <h3 class="item-title">${item.program_name || 'Без названия'}</h3>
+                                        <div class="item-date">${item.date_create ? 'Набор открыт до ' + new Date(item.date_create).toLocaleDateString() : ''}</div>
+                                        <p class="item-desc">${item.program_description || ''}</p>
+                                    </div>
+                                </div>`;
+                            });
+                        })
+                        .catch(err => {
+                            document.body.innerHTML += '<p style="color:red">Ошибка загрузки данных: ' + err + '</p>';
+                        });
+                });
+            </script>
+            <script src="chat.js"></script>
+
+</body>
+
+
+
+
+
+
+</html>

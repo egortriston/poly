@@ -1,0 +1,41 @@
+{
+  "name": "pg-large-object",
+  "version": "2.0.0",
+  "author": "Joris van der Wel <joris@jorisvanderwel.com>",
+  "description": "Large object support for PostgreSQL clients (node-postgres)",
+  "keywords": [
+    "big object",
+    "binary",
+    "database",
+    "file",
+    "pg",
+    "postgres",
+    "stream",
+    "sql"
+  ],
+  "bugs": {
+    "url": "https://github.com/Joris-van-der-Wel/node-pg-large-object/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Joris-van-der-Wel/node-pg-large-object.git"
+  },
+  "main": "./lib",
+  "dependencies": {},
+  "peerDependencies": {
+    "pg": ">=2.7.0"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^3.0.0",
+    "nodeunit": ">=0.8.6",
+    "pg": ">=2.11.1",
+    "pg-promise": "^5.6.1",
+    "q": "1.0.1"
+  },
+  "scripts": {
+    "test": "nodeunit ./test/promiseFromCallback.js ./test/pg.js ./test/pgPromise.js",
+    "predoc": "cp readme-header.md README.md",
+    "doc": "jsdoc2md --files \"lib/*.js\" >> README.md"
+  }
+}

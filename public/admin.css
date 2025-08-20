@@ -1,0 +1,347 @@
+лнительные стили для админ-панели */
+
+.container {
+    width: 100% !important;
+    max-width: 1600px !important;
+}
+
+
+
+.admin-container {
+    display: flex;
+    height: 70vh;
+}
+
+
+
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.user-card {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Align items to the edges */
+}
+
+
+.users-list {
+    width: 350px;
+    border-left: 1px solid #e0e0e0; /* Изменено с border-right */
+    border-right: none;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+.user-card.active {
+    border-right: 3px solid var(--primary-green); /* Изменено с border-left */
+    border-left: none;
+}
+
+.user-time {
+    font-size: 12px;
+    color: var(--medium-gray);
+    margin-left: auto; /* Push the time to the right */
+}
+
+.unread-count {
+    background-color: var(--primary-green);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column; /* Ensure messages stack vertically */
+}
+
+/* Additional styles for message time */
+.message-time {
+    display: block;
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 5px;
+    text-align: right; /* Align time to the right */
+}
+
+
+
+
+
+.user-card:hover {
+    background-color: #e8f5e9;
+}
+
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.user-info {
+    flex: 1;
+    width: 65%;
+}
+
+.user-name {
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.user-last-message {
+    font-size: 13px;
+    color: var(--medium-gray);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+
+.chat-header {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.chat-header-info {
+    margin-left: 10px;
+}
+
+.chat-header-name {
+    font-weight: 600;
+}
+
+.chat-header-status {
+    font-size: 13px;
+    color: var(--medium-gray);
+}
+
+
+
+.admin-message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+}
+
+.admin-message.admin {
+    background-color: var(--primary-green);
+    color: white;
+    align-self: flex-end;
+    margin-left: 30%;
+    border-bottom-right-radius: 5px;
+}
+
+.admin-message.user {
+    background-color: white;
+    color: var(--dark-gray);
+    align-self: flex-start;
+    margin-right: 30%;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.admin-message.admin .message-time {
+    text-align: right;
+}
+
+.admin-message.user .message-time {
+    text-align: left;
+}
+
+.chat-input-container {
+    padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    background-color: white;
+    display: flex;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.chat-input:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+.send-btn {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn:hover {
+    background-color: var(--dark-green);
+}
+
+.send-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: white;
+    border-radius: 18px;
+    align-self: flex-start;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: var(--medium-gray);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-users {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+}
+
+.search-users input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.no-chat-selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--medium-gray);
+    text-align: center;
+    padding: 20px;
+}
+
+.no-chat-selected svg {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+    color: var(--light-gray);
+}
+
+.admin-controls {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+    justify-content: space-between;
+}
+
+.admin-controls button {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.admin-controls button:hover {
+    background-color: var(--dark-green);
+}
+
+.user-details {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+}
+
+.user-details-item {
+    margin-bottom: 10px;
+}
+
+.user-details-label {
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-right: 5px;
+}
+
+.user-details-value {
+    color: var(--medium-gray);
+}
+
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+
+    .users-list {
+        width: 100%;
+        height: 300px;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .user-card {
+        padding: 10px;
+    }
+
+    .admin-message {
+        max-width: 85%;
+    }
+
+    .admin-message.admin {
+        margin-left: 15%;
+    }
+
+    .admin-message.user {
+        margin-right: 15%;
+    }
+}

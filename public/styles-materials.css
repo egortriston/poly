@@ -1,0 +1,702 @@
+:root {
+    --primary-green: #2E7D32; /* Основной зелёный */
+    --dark-green: #1B5E20; /* Тёмный зёлёный */
+    --light-green: hsl(123, 62%, 42%); /* Светлый зёленый */
+    --cream: #F1F8E9; /* Светлый кремовый фон */
+    --black: #212121; /* Чёрный для заголовков */
+    --dark-gray: #424242; /* Тёмно-серый */
+    --medium-gray: #757575; /* Серый */
+    --light-gray: #BDBDBD; /* Светло-серый */
+    --footer-dark: #263238; /* Тёмный футер */
+    --nav:rgb(243, 243, 243);
+    /* Акцентные цвета */
+    --university-green: #2e7d32;
+    --university-h:  #1ae224;
+    --university-light: rgb(33, 166, 73);
+    --university-gold: #d4af37;
+    --university-white: #ffffff;
+    --university-dark: #1a1a1a;
+    
+    /* Дополнительные зеленые оттенки */
+    --green-accent: #4caf50;
+    --green-light: #e8f5e9;
+}
+
+
+
+
+/* Стили для загрузки */
+.loading-materials {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Анимация загрузки */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+/* Активное состояние кнопки избранного */
+.favorite-btn.active svg path {
+    fill: #e74c3c;
+    stroke: #e74c3c;
+}
+
+/* Стили для ошибки */
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    padding: 20px;
+    background-color: #fdecea;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+/* Стили для страницы материалов */
+
+
+
+
+
+.filters-section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+
+
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filter-select, 
+.filter-group input[type="text"],
+.filter-group input[type="date"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+}
+
+.date-range input {
+    flex: 1;
+}
+
+
+.btn-reset,
+.btn-filter {
+    color: var(--medium-gray);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.tag {
+    background-color: var(--cream);
+    color: var(--dark-gray);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tag.selected {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-select {
+    padding: 8px 12px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    background-color: white;
+}
+
+/* Карточки материалов */
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.material-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.material-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.material-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    z-index: 1;
+}
+
+.material-badge.lecture {
+    background-color: #2196F3;
+}
+
+.material-badge.presentation {
+    background-color: #4CAF50;
+}
+
+.material-badge.article {
+    background-color: #FF9800;
+}
+
+.material-badge.book {
+    background-color: #9C27B0;
+}
+
+.material-badge.video {
+    background-color: #e80379;
+}
+
+.material-image {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.material-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.material-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--black);
+    font-weight: 600;
+}
+
+.material-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--medium-gray);
+    margin-bottom: 12px;
+}
+
+.material-desc {
+    font-size: 14px;
+    color: var(--dark-gray);
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.material-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.material-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.stars {
+    color: #FFC107;
+}
+
+.count {
+    color: var(--medium-gray);
+}
+
+.material-actions {
+    display: flex;
+    gap: 10px;
+}
+
+
+/* Пагинация */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.page-btn {
+    padding: 8px 15px;
+    border: 1px solid var(--light-gray);
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: var(--primary-green);
+    color: white;
+    border-color: var(--primary-green);
+}
+
+.page-btn.active {
+    background-color: var(--primary-green);
+    color: white;
+    border-color: var(--primary-green);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-dots {
+    padding: 0 5px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .filters-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-actions {
+        flex-direction: column;
+    }
+    
+    .materials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+    }
+}
+
+
+.filters-section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #212121;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+.filter-select:focus, 
+.filter-group input[type="text"]:focus,
+.filter-group input[type="date"]:focus,
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #2E7D32;
+    outline: none;
+}
+
+
+
+.filter-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+.btn-reset:hover {
+    color: #ff3232;
+}
+.btn-filter:hover {
+    color: #2E7D32;
+}
+
+/* Общие стили для всех элементов формы */
+
+/* Общие стили для всех элементов формы */
+.filter-select, 
+.filter-group input[type="text"],
+.filter-group input[type="date"],
+.select2-container--default .select2-selection--multiple {
+    min-height: 42px; /* Одинаковая высота */
+    padding: 8px 12px; /* Одинаковые отступы */
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: border-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+/* Стили для Select2 */
+.select2-container--default .select2-selection--multiple {
+    min-height: 42px; /* Одинаковая высота */
+    padding: 0px 0px; /* Отступы, как у инпутов */
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    padding: 0;
+    margin: 0;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #E8F5E9;
+    border: 1px solid #2E7D32;
+    border-radius: 15px;
+    padding: 0 8px;
+    margin-top: 5px;
+    margin-right: 5px;
+    font-size: 13px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #2E7D32;
+    margin-right: 4px;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    margin-top: 7px;
+    padding-left: 12px;
+    height: 28px;
+    font-size: 14px;
+}
+
+/* Стили для блока с датой */
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 2px; /* Отступ между элементами */
+}
+
+.date-range input {
+    flex: 1;
+    min-height: 42px; /* Одинаковая высота */
+    padding: 8px 8px; /* Одинаковые отступы */
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.date-range input:focus {
+    border-color: #2E7D32;
+    outline: none;
+}
+
+
+
+/* Стили для кнопки сворачивания/разворачивания */
+.toggle-filters-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.toggle-filters-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+/* Состояние свернуто */
+.filters-section.collapsed .toggle-filters-btn svg {
+    transform: rotate(180deg);
+}
+
+/* Анимация сворачивания/разворачивания */
+.filters-section .filters-grid {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.filters-section.collapsed .filters-grid {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.filters-section:not(.collapsed) .filters-grid {
+    max-height: 1000px; /* Укажите достаточно большое значение */
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+/* Обновленные стили для кнопок действий в карточках */
+.material-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.material-actions .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--cream);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--medium-gray);
+    position: relative;
+}
+
+.material-actions .btn-icon:hover {
+    background-color: var(--primary-green);
+    color: white;
+    transform: translateY(0px);
+    box-shadow: 0 4px 8px rgba(46, 125, 50, 0.2);
+}
+
+.material-actions .btn-icon:active {
+    transform: translateY(0);
+}
+
+.material-actions .btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Стили для кнопки скачивания */
+.btn-icon.download-btn:hover::after {
+    content: 'Скачать';
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-);
+    background-color: var(--black);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0.9;
+}
+
+/* Стили для кнопки лайка */
+.btn-icon.like-btn:hover::after {
+    content: 'В избранное';
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX();
+    background-color: var(--black);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0.9;
+}
+
+.btn-icon.like-btn.liked {
+    color: #f44336;
+}
+
+.btn-icon.like-btn.liked:hover::after {
+    content: 'Удалить из избранного';
+}
+
+/* Анимация для лайка */
+.btn-icon.like-btn .icon {
+    transition: transform 0.3s ease;
+}
+
+.btn-icon.like-btn:hover .icon {
+    transform: scale(1.1);
+}
+
+.btn-icon.like-btn.liked .icon {
+    animation: pulse 0.5s;
+}
+
+
+
+/* Стили для рейтинга */
+.material-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stars-container {
+    display: flex;
+    direction: rtl; /* Для удобства выбора рейтинга */
+}
+
+.star {
+    cursor: pointer;
+    color: var(--light-gray);
+    transition: color 0.2s;
+    font-size: 18px;
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: #FFC107; /* Цвет при наведении */
+}
+
+.star.selected {
+    color: #FFC107; /* Цвет выбранной звезды */
+}
+
+.rating-count {
+    font-size: 14px;
+    color: var(--medium-gray);
+    margin-left: 5px;
+}
+
+
+
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Обновленные иконки (можно заменить на свои) */
+.material-actions .btn-icon svg {
+    transition: all 0.3s ease;
+}
+
+.material-actions .btn-icon:hover svg {
+    stroke: white;
+}
+
+
+
+/* Иконка для кнопки (опционально) */
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .btn-filter {
+        padding: 14px 0px;
+    }
+}
