@@ -36,19 +36,27 @@
         }
 
         .auth-form input,
-        .auth-form select {
+        .auth-form select,
+        .auth-form textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 16px;
             transition: border-color 0.3s;
+            font-family: inherit;
         }
 
         .auth-form input:focus,
-        .auth-form select:focus {
+        .auth-form select:focus,
+        .auth-form textarea:focus {
             border-color: #3498db;
             outline: none;
+        }
+
+        .auth-form textarea {
+            resize: vertical;
+            min-height: 80px;
         }
 
         .auth-form button {
@@ -166,6 +174,22 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="school">Учебное заведение</label>
+                        <input type="text" id="school" name="school" placeholder="Введите ваше учебное заведение">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Введите ваш телефон">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">О себе</label>
+                        <textarea id="description" name="description" rows="3"
+                            placeholder="Расскажите немного о себе"></textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label for="password">Пароль</label>
                         <input type="password" id="password" name="password" required placeholder="Придумайте пароль"
                             autocomplete="new-password">
@@ -233,6 +257,9 @@
             const formData = {
                 user_name: document.getElementById('firstName').value,
                 user_mail: document.getElementById('email').value,
+                user_school: document.getElementById('school').value,
+                user_phone: document.getElementById('phone').value,
+                user_description: document.getElementById('description').value,
                 password: document.getElementById('password').value,
                 confirmPassword: document.getElementById('confirmPassword').value
             };
@@ -256,6 +283,9 @@
                     body: JSON.stringify({
                         user_name: formData.user_name,
                         user_mail: formData.user_mail,
+                        user_school: formData.user_school,
+                        user_phone: formData.user_phone,
+                        user_description: formData.user_description,
                         password: formData.password
                     })
                 });
@@ -264,8 +294,8 @@
                     alert(data.error || 'Ошибка регистрации');
                     return;
                 }
-                localStorage.setItem('isAuth', 'true');
-                window.location.href = 'home.html';
+                alert('Регистрация успешна! Теперь войдите в систему.');
+                window.location.href = 'login.html';
             } catch (err) {
                 alert('Ошибка сети: ' + err.message);
             }
