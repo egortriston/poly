@@ -587,6 +587,10 @@
                 e.preventDefault();
 
                 if (validateStep(currentStep)) {
+                    // Получаем ID пользователя из localStorage
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    const userId = user.id_user || user.id || 1;
+
                     // Собираем данные для отправки
                     const formData = new FormData();
                     formData.append('eventName', document.getElementById('eventName').value);
@@ -612,8 +616,14 @@
                         formData.append('files[]', files[i]);
                     }
 
+                    // Добавляем ID пользователя
+                    formData.append('userId', userId);
+
                     fetch('/api/events', {
                         method: 'POST',
+                        headers: {
+                            'X-User-ID': userId
+                        },
                         body: formData
                     })
                         .then(response => response.json())

@@ -535,6 +535,10 @@
                 e.preventDefault();
 
                 if (validateStep(currentStep)) {
+                    // Получаем ID пользователя из localStorage
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    const userId = user.id_user || user.id || 1;
+
                     // Здесь будет код для отправки данных на сервер
                     const formData = new FormData();
                     formData.append('programName', document.getElementById('programName').value);
@@ -555,9 +559,15 @@
                         formData.append('files[]', files[i]);
                     }
 
+                    // Добавляем ID пользователя
+                    formData.append('userId', userId);
+
                     // Пример AJAX-запроса (нужно заменить на реальный эндпоинт)
                     fetch('/api/programs', {
                         method: 'POST',
+                        headers: {
+                            'X-User-ID': userId
+                        },
                         body: formData
                     })
                         .then(response => response.json())

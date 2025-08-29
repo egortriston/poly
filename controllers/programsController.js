@@ -139,7 +139,7 @@ exports.createProgram = [
       const {
         programName, programType, resourceLink, programDescription, additionalInfo
       } = req.body;
-      const id_user = req.user?.id_user || 1;
+      const id_user = req.user?.id_user || req.body.userId || 1;
       const result = await client.query(
         `INSERT INTO programs_table
         (id_user, program_name, program_type, program_link, program_image, program_description, program_info, program_status, date_create)
@@ -163,6 +163,20 @@ exports.createProgram = [
           [id_program, oid]
         );
       }
+      
+      // 4. Отправляем сообщение в админ-чат для модерации
+      await client.query(
+        `INSERT INTO messages_table 
+         (id_user, message_text, message_time, type_message, id_program)
+         VALUES ($1, $2, NOW(), true, $3)`,
+        [
+          id_user,
+          `Новая программа "${programName}" отправлена на модерацию. Тип: ${programType || 'Не указан'}. Описание: ${programDescription || 'Не указано'}`,
+          id_program
+        ]
+      );
+      console.log('Сообщение отправлено в админ-чат для модерации');
+      
       await client.query('COMMIT');
       res.status(201).json({ success: true, id_program });
     } catch (err) {
@@ -187,15 +201,54 @@ exports.getUserPrograms = async (req, res) => {
   }
 };
 
+// Получить изображение программы
 exports.getProgramImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query('SELECT program_image FROM programs_table WHERE id_program = $1', [id]);
+    const result = await pool.query('SELECT program_image FROM program_table WHERE id_program = $1', [id]);
     if (result.rows.length === 0 || !result.rows[0].program_image) {
       return res.status(404).send('Not found');
     }
     res.set('Content-Type', 'image/png');
     res.send(result.rows[0].program_image);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+};
+
+// Получить файлы программы
+exports.getProgramFiles = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('SELECT * FROM program_files WHERE id_program = $1', [id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Скачать файл программы
+exports.downloadProgramFile = async (req, res) => {
+  try {
+    const { id, fileId } = req.params;
+    const result = await pool.query('SELECT file FROM program_files WHERE id_program_file = $1 AND id_program = $2', [fileId, id]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).send('File not found');
+    }
+    
+    const client = await pool.connect();
+    try {
+      const lom = new LargeObjectManager({ pg: client });
+      const stream = await lom.openAndReadableStreamAsync(result.rows[0].file);
+      
+      res.set('Content-Type', 'application/octet-stream');
+      res.set('Content-Disposition', `attachment; filename="program_file_${fileId}"`);
+      
+      stream.pipe(res);
+    } finally {
+      client.release();
+    }
   } catch (err) {
     res.status(500).send('Server error');
   }

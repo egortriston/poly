@@ -75,7 +75,7 @@ exports.createNews = [
       const {
         title, category, publicationDate, content, author, source
       } = req.body;
-      const id_user = req.user?.id_user || 1;
+      const id_user = req.user?.id_user || req.body.userId || 1;
       const result = await client.query(
         `INSERT INTO news_table
         (id_user, name_news, news_category, news_date, news_text, news_author, news_link, news_image, news_status, date_create)
@@ -100,6 +100,20 @@ exports.createNews = [
           [id_news, oid]
         );
       }
+      
+      // 4. Отправляем сообщение в админ-чат для модерации
+      await client.query(
+        `INSERT INTO messages_table 
+         (id_user, message_text, message_time, type_message, id_news)
+         VALUES ($1, $2, NOW(), true, $3)`,
+        [
+          id_user,
+          `Новая новость "${title}" отправлена на модерацию. Автор: ${author || 'Не указан'}. Категория: ${category || 'Не указана'}`,
+          id_news
+        ]
+      );
+      console.log('Сообщение отправлено в админ-чат для модерации');
+      
       await client.query('COMMIT');
       res.status(201).json({ success: true, id_news });
     } catch (err) {
@@ -133,6 +147,44 @@ exports.getNewsImage = async (req, res) => {
     }
     res.set('Content-Type', 'image/png');
     res.send(result.rows[0].news_image);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+};
+
+// Получить файлы новости
+exports.getNewsFiles = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('SELECT * FROM news_file WHERE id_news = $1', [id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Скачать файл новости
+exports.downloadNewsFile = async (req, res) => {
+  try {
+    const { id, fileId } = req.params;
+    const result = await pool.query('SELECT file FROM news_file WHERE id_news_file = $1 AND id_news = $2', [fileId, id]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).send('File not found');
+    }
+    
+    const client = await pool.connect();
+    try {
+      const lom = new LargeObjectManager({ pg: client });
+      const stream = await lom.openAndReadableStreamAsync(result.rows[0].file);
+      
+      res.set('Content-Type', 'application/octet-stream');
+      res.set('Content-Disposition', `attachment; filename="news_file_${fileId}"`);
+      
+      stream.pipe(res);
+    } finally {
+      client.release();
+    }
   } catch (err) {
     res.status(500).send('Server error');
   }

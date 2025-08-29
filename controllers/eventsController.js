@@ -134,7 +134,7 @@ exports.createEvent = [
         eventDescription, targetAudience, additionalInfo
       } = req.body;
       // id_user из авторизации или временно 1
-      const id_user = req.user?.id_user || 1;
+      const id_user = req.user?.id_user || req.body.userId || 1;
       const result = await client.query(
         `INSERT INTO events_table
         (id_user, event_name, event_type, event_category, start, "end", time_start, event_place, event_description, event_audience, event_info, event_image, event_status, date_create)
@@ -163,6 +163,20 @@ exports.createEvent = [
           [id_event, oid]
         );
       }
+      
+      // 4. Отправляем сообщение в админ-чат для модерации
+      await client.query(
+        `INSERT INTO messages_table 
+         (id_user, message_text, message_time, type_message, id_event)
+         VALUES ($1, $2, NOW(), true, $3)`,
+        [
+          id_user,
+          `Новое событие "${eventName}" отправлено на модерацию. Тип: ${eventType || 'Не указан'}. Дата: ${startDate || 'Не указана'}. Место: ${eventLocation || 'Не указано'}`,
+          id_event
+        ]
+      );
+      console.log('Сообщение отправлено в админ-чат для модерации');
+      
       await client.query('COMMIT');
       res.status(201).json({ success: true, id_event });
     } catch (err) {
@@ -196,6 +210,44 @@ exports.getEventImage = async (req, res) => {
     }
     res.set('Content-Type', 'image/png');
     res.send(result.rows[0].event_image);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+}; 
+
+// Получить файлы события
+exports.getEventFiles = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('SELECT * FROM events_file WHERE id_event = $1', [id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Скачать файл события
+exports.downloadEventFile = async (req, res) => {
+  try {
+    const { id, fileId } = req.params;
+    const result = await pool.query('SELECT file FROM events_file WHERE id_event_file = $1 AND id_event = $2', [fileId, id]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).send('File not found');
+    }
+    
+    const client = await pool.connect();
+    try {
+      const lom = new LargeObjectManager({ pg: client });
+      const stream = await lom.openAndReadableStreamAsync(result.rows[0].file);
+      
+      res.set('Content-Type', 'application/octet-stream');
+      res.set('Content-Disposition', `attachment; filename="event_file_${fileId}"`);
+      
+      stream.pipe(res);
+    } finally {
+      client.release();
+    }
   } catch (err) {
     res.status(500).send('Server error');
   }

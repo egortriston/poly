@@ -1,7 +1,24 @@
 const pool = require('../models/db');
 const multer = require('multer');
 const upload = multer();
+const path = require('path');
+const fs = require('fs').promises;
 const LargeObjectManager = require('pg-large-object').LargeObjectManager;
+
+// Получить изображение материала
+exports.getMaterialImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('SELECT material_image FROM materials_table WHERE id_material = $1', [id]);
+    if (result.rows.length === 0 || !result.rows[0].material_image) {
+      return res.status(404).send('Not found');
+    }
+    res.set('Content-Type', 'image/png');
+    res.send(result.rows[0].material_image);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+};
 
 // Универсальная функция для отправки ответов
 const sendResponse = (res, status, data) => {
@@ -195,7 +212,7 @@ exports.createMaterial = [
       } = req.body;
       
       // Получаем ID пользователя из localStorage или используем дефолтный
-      const id_user = req.body.userId || 1;
+      const id_user = req.user?.id_user || req.body.userId || 1;
       
       console.log('Данные материала:', {
         id_user, title, type, category, author, shortDescription, description, link, keywords
@@ -233,6 +250,19 @@ exports.createMaterial = [
         console.log('Файл не был загружен или сохранен');
       }
 
+      // 4. Отправляем сообщение в админ-чат для модерации
+      await client.query(
+        `INSERT INTO messages_table 
+         (id_user, message_text, message_time, type_message, id_material)
+         VALUES ($1, $2, NOW(), true, $3)`,
+        [
+          id_user,
+          `Новый материал "${title}" отправлен на модерацию. Автор: ${author || 'Не указан'}. Описание: ${shortDescription || 'Не указано'}`,
+          id_material
+        ]
+      );
+      console.log('Сообщение отправлено в админ-чат для модерации');
+
       await client.query('COMMIT');
       sendResponse(res, 201, { 
         success: true, 
@@ -253,113 +283,39 @@ exports.createMaterial = [
   }
 ];
 
-// Функция для скачивания файла материала
-exports.downloadMaterialFile = async (req, res) => {
-  const client = await pool.connect();
+// Получить файлы материала
+exports.getMaterialFiles = async (req, res) => {
   try {
     const { id } = req.params;
-    
-    // Получаем информацию о файле
-    const result = await client.query(
-      `SELECT mf.file_path, mt.material_name, mt.material_status
-       FROM materials_files mf 
-       JOIN materials_table mt ON mf.id_material = mt.id_material 
-       WHERE mf.id_material = $1`,
-      [id]
-    );
-
-    if (result.rows.length === 0) {
-      console.log('Файл не найден для материала ID:', id);
-      return sendResponse(res, 404, {
-        success: false,
-        error: 'File not found'
-      });
-    }
-
-    const { file_path, material_name, material_status } = result.rows[0];
-    console.log('Найден файл:', { id, file_path, material_name, material_status });
-
-    // Проверяем, что путь к файлу существует
-    if (!file_path) {
-      console.log('Путь к файлу не найден');
-      return sendResponse(res, 404, {
-        success: false,
-        error: 'File path not found'
-      });
-    }
-
-    console.log('Пытаемся скачать файл по пути:', file_path);
-
-    // Читаем файл из файловой системы
-    try {
-      const fileBuffer = await readFileFromDisk(file_path);
-      console.log('Файл прочитан, размер:', fileBuffer.length, 'байт');
-
-      // Определяем MIME тип по расширению
-      const path = require('path');
-      const ext = path.extname(file_path).toLowerCase();
-      console.log('Определенное расширение файла:', ext);
-      
-      let contentType = 'application/octet-stream';
-      
-      if (ext === '.pdf') contentType = 'application/pdf';
-      else if (ext === '.doc' || ext === '.docx') contentType = 'application/msword';
-      else if (ext === '.ppt' || ext === '.pptx') contentType = 'application/vnd.ms-powerpoint';
-      else if (ext === '.mp3') contentType = 'audio/mpeg';
-      else if (ext === '.mp4') contentType = 'video/mp4';
-      else if (ext === '.jpg' || ext === '.jpeg') contentType = 'image/jpeg';
-      else if (ext === '.png') contentType = 'image/png';
-      
-      console.log('Определенный MIME тип:', contentType);
-      console.log('Имя файла для скачивания:', `${material_name}${ext}`);
-
-      // Очищаем имя файла для HTTP заголовка (убираем кириллицу и специальные символы)
-      const safeFileName = `${material_name}${ext}`.replace(/[^a-zA-Z0-9.-]/g, '_');
-      console.log('Безопасное имя файла для заголовка:', safeFileName);
-
-      // Кодируем имя файла для UTF-8
-      const encodedFileName = encodeURIComponent(safeFileName);
-      console.log('Закодированное имя файла:', encodedFileName);
-
-      // Устанавливаем заголовки для скачивания
-      res.setHeader('Content-Type', contentType);
-      res.setHeader('Content-Disposition', `attachment; filename="${safeFileName}"; filename*=UTF-8''${encodedFileName}`);
-      res.setHeader('Content-Length', fileBuffer.length);
-      res.setHeader('Cache-Control', 'no-cache');
-      res.setHeader('Pragma', 'no-cache');
-
-      // Отправляем файл
-      res.send(fileBuffer);
-      
-    } catch (error) {
-      console.error('Ошибка чтения файла:', error);
-      sendResponse(res, 500, {
-        success: false,
-        error: 'File read error',
-        message: error.message
-      });
-    }
+    const result = await pool.query('SELECT * FROM materials_files WHERE id_material = $1', [id]);
+    res.json(result.rows);
   } catch (err) {
-    console.error('Ошибка скачивания файла:', err);
-    sendResponse(res, 500, {
-      success: false,
-      error: 'Internal server error',
-      message: err.message
-    });
-  } finally {
-    client.release();
+    res.status(500).json({ error: err.message });
   }
 };
 
-exports.getMaterialImage = async (req, res) => {
+// Скачать файл материала
+exports.downloadMaterialFile = async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await pool.query('SELECT material_image FROM materials_table WHERE id_material = $1', [id]);
-    if (result.rows.length === 0 || !result.rows[0].material_image) {
-      return res.status(404).send('Not found');
+    const { id, fileId } = req.params;
+    const result = await pool.query('SELECT file FROM materials_files WHERE id_file_material = $1 AND id_material = $2', [fileId, id]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).send('File not found');
     }
-    res.set('Content-Type', 'image/png');
-    res.send(result.rows[0].material_image);
+    
+    const client = await pool.connect();
+    try {
+      const lom = new LargeObjectManager({ pg: client });
+      const stream = await lom.openAndReadableStreamAsync(result.rows[0].file);
+      
+      res.set('Content-Type', 'application/octet-stream');
+      res.set('Content-Disposition', `attachment; filename="material_file_${fileId}"`);
+      
+      stream.pipe(res);
+    } finally {
+      client.release();
+    }
   } catch (err) {
     res.status(500).send('Server error');
   }
@@ -433,9 +389,6 @@ exports.cleanupCorruptedFiles = async (req, res) => {
 };
 
 // Альтернативная функция для сохранения файлов в файловой системе
-const fs = require('fs').promises;
-const path = require('path');
-
 async function saveFileToDisk(fileBuffer, fileName) {
   const uploadDir = path.join(__dirname, '..', 'uploads');
   
