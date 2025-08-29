@@ -11,4 +11,10 @@ router.get('/user/:id', eventsController.getUserEvents);
 // router.put('/:id', eventsController.updateEvent);
 // router.delete('/:id', eventsController.deleteEvent);
 
+// Получить файлы события
+router.get('/:id/files', eventsController.getEventFiles);
+
+// Скачать файл события
+router.get('/:id/files/:fileId', eventsController.downloadEventFile);
+
 module.exports = router; 

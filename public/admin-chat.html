@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-панель чатов | СПбПУ</title>
+    <title>Админ-панель модерации | СПбПУ</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="admin.css">
-
+    <link rel="stylesheet" href="admin-moderation.css">
 </head>
 
 <body>
@@ -33,15 +32,18 @@
                         </button>
                     </div>
 
-                    <button class="message-btn" id="chatBtn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-
                     <button class="login-btn active">Админ-панель</button>
+                    <button class="logout-btn" id="logout-btn" onclick="logout()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H9" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <polyline points="16,17 21,12 16,7" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Выйти
+                    </button>
                 </div>
                 <img src="image/logo.svg" alt="Логотип СПбПУ" class="logo-ipmt">
             </div>
@@ -65,146 +67,59 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <h1 class="section-title">Админ-панель чатов</h1>
+            <h1 class="section-title">Панель модерации контента</h1>
 
-            <div class="admin-container">
-                <!-- Список пользователей -->
-                <div class="users-list">
-                    <div class="search-users">
-                        <input type="text" placeholder="Поиск пользователей..." id="userSearch">
+            <div class="moderation-container">
+                <!-- Статистика модерации -->
+                <div class="moderation-stats" id="moderation-stats">
+                    <div class="stat-item">
+                        <span class="stat-number pending">0</span>
+                        <span class="stat-label">Материалы</span>
                     </div>
-
-                    <div class="user-card active">
-                        <img src="image/images.png" alt="Аватар" class="user-avatar">
-                        <div class="user-info">
-                            <div class="user-name">Иванов Иван</div>
-                            <div class="user-last-message">Здравствуйте, у меня вопрос по курсу...</div>
-                        </div>
-                        <div class="user-time">12:30</div>
-                        <div class="unread-count">3</div>
+                    <div class="stat-item">
+                        <span class="stat-number approved">0</span>
+                        <span class="stat-label">Новости</span>
                     </div>
-
-                    <div class="user-card">
-                        <img src="image/images.png" alt="Аватар" class="user-avatar">
-                        <div class="user-info">
-                            <div class="user-name">Петрова Анна</div>
-                            <div class="user-last-message">Спасибо за помощь!</div>
-                        </div>
-                        <div class="user-time">10:45</div>
+                    <div class="stat-item">
+                        <span class="stat-number rejected">0</span>
+                        <span class="stat-label">События</span>
                     </div>
-
-                    <div class="user-card">
-                        <img src="image/images.png" alt="Аватар" class="user-avatar">
-                        <div class="user-info">
-                            <div class="user-name">Сидоров Алексей</div>
-                            <div class="user-last-message">Когда будет следующее занятие?</div>
-                        </div>
-                        <div class="user-time">Вчера</div>
-                        <div class="unread-count">1</div>
-                    </div>
-
-                    <div class="user-card">
-                        <img src="image/images.png" alt="Аватар" class="user-avatar">
-                        <div class="user-info">
-                            <div class="user-name">Кузнецова Мария</div>
-                            <div class="user-last-message">Отправила задание на проверку</div>
-                        </div>
-                        <div class="user-time">Пн</div>
-                    </div>
-
-                    <div class="user-card">
-                        <img src="image/images.png" alt="Аватар" class="user-avatar">
-                        <div class="user-info">
-                            <div class="user-name">Васильев Дмитрий</div>
-                            <div class="user-last-message">Не могу войти в личный кабинет</div>
-                        </div>
-                        <div class="user-time">12 мая</div>
+                    <div class="stat-item">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Программы</span>
                     </div>
                 </div>
 
-                <div class="chat-container">
-                    <div class="chat-header">
-                        <img src="image/images.png" alt="Аватар" class="user-avatar">
-                        <div class="chat-header-info">
-                            <div class="chat-header-name">Иванов Иван</div>
-                            <div class="chat-header-status">В сети</div>
-                        </div>
-                    </div>
-
-                    <div class="admin-controls">
-                        <button id="userDetailsBtn">Информация о пользователе</button>
-                        <button id="closeChatBtn">Закрыть чат</button>
-                    </div>
-
-                    <div class="user-details" id="userDetails" style="display: none;">
-                        <div class="user-details-item">
-                            <span class="user-details-label">ФИО:</span>
-                            <span class="user-details-value">Иванов Иван Иванович</span>
-                        </div>
-                        <div class="user-details-item">
-                            <span class="user-details-label">Email:</span>
-                            <span class="user-details-value">ivanov@edu.spbstu.ru</span>
-                        </div>
-                        <div class="user-details-item">
-                            <span class="user-details-label">Высшая школа:</span>
-                            <span class="user-details-value">ВШБИ</span>
-                        </div>
-                        <div class="user-details-item">
-                            <span class="user-details-label">Должность:</span>
-                            <span class="user-details-value">Студент</span>
-                        </div>
-                        <div class="user-details-item">
-                            <span class="user-details-label">Телефон:</span>
-                            <span class="user-details-value">+7 (900) 123-45-67</span>
-                        </div>
-                    </div>
-
-                    <div class="chat-messages">
-                        <div class="admin-message user">
-                            Здравствуйте, у меня вопрос по курсу машинного обучения
-                            <span class="message-time">12:30</span>
-                        </div>
-
-                        <div class="admin-message admin">
-                            Здравствуйте, Иван! Чем могу помочь?
-                            <span class="message-time">12:32</span>
-                        </div>
-
-                        <div class="admin-message user">
-                            Не могу найти материалы к последней лекции. Где они размещены?
-                            <span class="message-time">12:33</span>
-                        </div>
-
-                        <div class="admin-message admin">
-                            Материалы доступны в разделе "Курсы" → "Машинное обучение" → "Лекция 5". Если не найдете,
-                            могу отправить ссылку.
-                            <span class="message-time">12:35</span>
-                        </div>
-
-                        <div class="typing-indicator">
-                            Пользователь печатает...
-                            <div class="typing-dots">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-input-container">
-                        <input type="text" class="chat-input" placeholder="Введите сообщение..." id="adminMessageInput">
-                        <button class="send-btn" id="sendAdminMessage">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2"
+                <!-- Панель управления -->
+                <div class="admin-controls-panel">
+                    <h3>Сообщения для модерации</h3>
+                    <div class="admin-buttons">
+                        <button class="show-all-btn" id="show-all-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 11H1L11 1L21 11H13V21H9V11Z" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
+                            Показать все
+                        </button>
+                        <button class="refresh-btn" id="refresh-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10M23 14L18.36 18.36A9 9 0 0 1 3.51 15"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            Обновить
                         </button>
                     </div>
                 </div>
 
+                <!-- Список сообщений для модерации -->
+                <div class="moderation-list" id="moderation-list">
+                    <div class="empty-state">Загрузка сообщений...</div>
+                </div>
             </div>
         </div>
     </main>
@@ -221,115 +136,32 @@
                 </div>
 
                 <div class="footer-section">
-                    <h3>Быстрые ссылки</h3>
-                    <a href="#">Расписание</a>
-                    <a href="#">Преподаватели</a>
-                    <a href="#">Библиотека</a>
-                    <a href="#">Техподдержка</a>
+                    <h3>Полезные ссылки</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Поддержка</a></li>
+                    </ul>
                 </div>
 
                 <div class="footer-section">
                     <h3>Социальные сети</h3>
-                    <a href="#">ВКонтакте</a>
-                    <a href="#">Telegram</a>
-                    <a href="#">YouTube</a>
-                    <a href="#">Twitter</a>
+                    <div class="social-links">
+                        <a href="#" class="social-link">VK</a>
+                        <a href="#" class="social-link">Telegram</a>
+                        <a href="#" class="social-link">YouTube</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="copyright">
-                <p>© 2023 Санкт-Петербургский политехнический университет Петра Великого. Все права защищены.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 СПбПУ. Все права защищены.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Переключение между пользователями
-            const userCards = document.querySelectorAll('.user-card');
-            userCards.forEach(card => {
-                card.addEventListener('click', function () {
-                    userCards.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Здесь можно добавить загрузку истории чата с выбранным пользователем
-                    document.querySelector('.unread-count')?.remove();
-                });
-            });
-
-            // Отправка сообщения
-            const sendBtn = document.getElementById('sendAdminMessage');
-            const messageInput = document.getElementById('adminMessageInput');
-            const chatMessages = document.querySelector('.chat-messages');
-
-            sendBtn.addEventListener('click', sendMessage);
-            messageInput.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-
-            function sendMessage() {
-                const messageText = messageInput.value.trim();
-                if (messageText) {
-                    const now = new Date();
-                    const timeString = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
-
-                    const messageElement = document.createElement('div');
-                    messageElement.className = 'admin-message admin';
-                    messageElement.innerHTML = `
-                        ${messageText}
-                        <span class="message-time">${timeString}</span>
-                    `;
-
-                    chatMessages.appendChild(messageElement);
-                    messageInput.value = '';
-
-                    // Прокрутка к новому сообщению
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                    // Здесь можно добавить отправку сообщения на сервер
-                }
-            }
-
-            // Показать/скрыть детали пользователя
-            const userDetailsBtn = document.getElementById('userDetailsBtn');
-            const userDetails = document.getElementById('userDetails');
-
-            userDetailsBtn.addEventListener('click', function () {
-                if (userDetails.style.display === 'none') {
-                    userDetails.style.display = 'block';
-                    this.textContent = 'Скрыть информацию';
-                } else {
-                    userDetails.style.display = 'none';
-                    this.textContent = 'Информация о пользователе';
-                }
-            });
-
-            // Поиск пользователей
-            const userSearch = document.getElementById('userSearch');
-            userSearch.addEventListener('input', function () {
-                const searchTerm = this.value.toLowerCase();
-                userCards.forEach(card => {
-                    const userName = card.querySelector('.user-name').textContent.toLowerCase();
-                    const userMessage = card.querySelector('.user-last-message').textContent.toLowerCase();
-
-                    if (userName.includes(searchTerm) || userMessage.includes(searchTerm)) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-
-            // Закрытие чата (для мобильной версии)
-            const closeChatBtn = document.getElementById('closeChatBtn');
-            closeChatBtn.addEventListener('click', function () {
-                document.querySelector('.chat-container').style.display = 'none';
-                document.querySelector('.users-list').style.width = '100%';
-            });
-        });
-    </script>
+    <script src="admin-chat.js"></script>
 </body>
 
 </html>

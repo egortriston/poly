@@ -9,10 +9,13 @@
 
 .admin-container {
     display: flex;
-    height: 70vh;
+    min-height: 70vh;
 }
 
-
+.stat-item{
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 
 .chat-container {

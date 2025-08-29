@@ -350,7 +350,7 @@
                     container.appendChild(card);
                 });
             } catch (err) {
-                container.innerHTML = '<div>Ошибка сети</div>';
+                container.innerHTML = '<div class="error-state">Ошибка сети</div>';
             }
         }
 
@@ -393,7 +393,7 @@
                     container.appendChild(card);
                 });
             } catch (err) {
-                container.innerHTML = '<div>Ошибка сети</div>';
+                container.innerHTML = '<div class="error-state">Ошибка сети</div>';
             }
         }
 
@@ -443,7 +443,7 @@
                     container.appendChild(card);
                 });
             } catch (err) {
-                container.innerHTML = '<div>Ошибка сети</div>';
+                container.innerHTML = '<div class="error-state">Ошибка сети</div>';
             }
         }
 
@@ -467,11 +467,11 @@
                 const response = await fetch(`/api/programs/user/${userId}`);
                 const data = await response.json();
                 if (!response.ok || !data.success) {
-                    container.innerHTML = '<div>Ошибка загрузки программ</div>';
+                    container.innerHTML = '<div class="error-state">Ошибка загрузки программ</div>';
                     return;
                 }
                 if (!data.data.length) {
-                    container.innerHTML = '<div>У вас пока нет программ</div>';
+                    container.innerHTML = '<div class="empty-state">У вас пока нет программ</div>';
                     return;
                 }
                 container.innerHTML = '';
@@ -522,12 +522,12 @@
                 const data = await response.json();
 
                 if (!response.ok || !data.success) {
-                    container.innerHTML = '<div>Ошибка загрузки избранного</div>';
+                    container.innerHTML = '<div class="error-state">Ошибка загрузки избранного</div>';
                     return;
                 }
 
                 if (!data.data.length) {
-                    container.innerHTML = '<div>У вас пока нет избранных элементов</div>';
+                    container.innerHTML = '<div class="empty-state">У вас пока нет избранных элементов</div>';
                     return;
                 }
 
@@ -605,12 +605,12 @@
                 }
 
                 if (container.children.length === 0) {
-                    container.innerHTML = '<div>У вас пока нет избранных элементов</div>';
+                    container.innerHTML = '<div class="empty-state">У вас пока нет избранных элементов</div>';
                 }
 
             } catch (err) {
                 console.error('Ошибка загрузки избранного:', err);
-                container.innerHTML = '<div>Ошибка сети</div>';
+                container.innerHTML = '<div class="error-state">Ошибка сети</div>';
             }
         }
 

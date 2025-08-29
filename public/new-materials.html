@@ -600,6 +600,9 @@
 
                     fetch('/api/materials', {
                         method: 'POST',
+                        headers: {
+                            'X-User-ID': userId
+                        },
                         body: formData
                     })
                         .then(response => response.json())

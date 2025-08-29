@@ -4,8 +4,14 @@ const materialsController = require('../controllers/materialsController');
 
 router.get('/', materialsController.getAllMaterials);
 router.get('/:id', materialsController.getMaterialById);
+// Получить изображение материала
 router.get('/:id/image', materialsController.getMaterialImage);
-router.get('/:id/download', materialsController.downloadMaterialFile);
+
+// Получить файлы материала
+router.get('/:id/files', materialsController.getMaterialFiles);
+
+// Скачать файл материала
+router.get('/:id/files/:fileId', materialsController.downloadMaterialFile);
 router.post('/cleanup-files', materialsController.cleanupCorruptedFiles);
 router.post('/filter', materialsController.filterMaterials);
 router.post('/', materialsController.createMaterial);
